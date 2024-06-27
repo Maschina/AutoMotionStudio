@@ -12,7 +12,7 @@ struct ActionListElement: View {
 	
 	var delay: Duration {
 		let modf = modf(action.delay)
-		return Duration(secondsComponent: Int64(modf.0), attosecondsComponent: Int64(modf.1) * 1_000_000_000_000_000_000)
+		return Duration(secondsComponent: Int64(modf.0), attosecondsComponent: Int64(modf.1 * 1000) * 1_000_000_000_000_000)
 	}
 	
     var body: some View {
@@ -38,7 +38,7 @@ struct ActionListElement: View {
 
 #Preview {
 	let action = Action(type: .linearMove)
-	action.delay = 2
+	action.delay = 2.5
 	return ActionListElement(action: action)
 		.padding()
 }

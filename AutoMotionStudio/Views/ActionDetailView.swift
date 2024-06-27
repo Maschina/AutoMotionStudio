@@ -61,6 +61,31 @@ struct ActionDetailView: View {
 					}
 				}
 			}
+			
+			Section("Trigger Delay") {
+				HStack {
+					Text("Duration (in seconds)")
+
+					let secondsBinding = Binding<TimeInterval> {
+						let seconds = Double(action.delay.components.seconds) + Double(action.delay.components.attoseconds) * 1e-18
+						return TimeInterval(seconds)
+					} set: { newValue in
+						let modf = modf(newValue)
+						action.delay = Duration(secondsComponent: Int64(modf.0), attosecondsComponent: Int64(modf.1) * 1_000_000_000_000_000_000)
+					}
+
+					
+					TextField(value: secondsBinding, format: .number.precision(.fractionLength(2))) { ControlGroup {
+							Button(action: { action.delay += .milliseconds(500) }, label: {
+								Image(systemName: "plus")
+							})
+							Button(action: { action.delay -= .milliseconds(500) }, label: {
+								Image(systemName: "minus")
+							})
+						}
+					}
+				}
+			}
 		}
 		.formStyle(.grouped)
 		.padding()
@@ -70,5 +95,5 @@ struct ActionDetailView: View {
 #Preview {
 	let action = Action(type: .linearMove)
 	return ActionDetailView(action: action)
-		.frame(width: 400)
+		.frame(width: 400, height: 800)
 }

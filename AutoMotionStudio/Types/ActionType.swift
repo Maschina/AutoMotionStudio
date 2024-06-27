@@ -29,9 +29,9 @@ extension ActionType: CustomStringConvertible {
 			case .secondaryClick:
 				return NSLocalizedString("Secondary Click", tableName: "Localizable", comment: "")
 			case .dragStart:
-				return NSLocalizedString("Mouse Primary Drag", tableName: "Localizable", comment: "")
+				return NSLocalizedString("Drag Start", tableName: "Localizable", comment: "")
 			case .dragEnd:
-				return NSLocalizedString("Mouse Secondary Drag", tableName: "Localizable", comment: "")
+				return NSLocalizedString("Drag End", tableName: "Localizable", comment: "")
 		}
 	}
 }

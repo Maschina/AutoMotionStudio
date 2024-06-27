@@ -21,6 +21,9 @@
 		667BD29A2C2D547000E9F016 /* ContentViewToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */; };
 		667BD29E2C2D73E600E9F016 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD29D2C2D73E600E9F016 /* CGPoint+.swift */; };
 		667BD2A02C2D74D600E9F016 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD29F2C2D74D600E9F016 /* CGFloat+.swift */; };
+		667BD2A22C2D7A7600E9F016 /* ActionListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2A12C2D7A7600E9F016 /* ActionListElement.swift */; };
+		667BD2A42C2D80D600E9F016 /* PropertyWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2A32C2D80D600E9F016 /* PropertyWrappers.swift */; };
+		667BD2A72C2D8C6A00E9F016 /* Task+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2A62C2D8C6A00E9F016 /* Task+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewToolbar.swift; sourceTree = "<group>"; };
 		667BD29D2C2D73E600E9F016 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		667BD29F2C2D74D600E9F016 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
+		667BD2A12C2D7A7600E9F016 /* ActionListElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListElement.swift; sourceTree = "<group>"; };
+		667BD2A32C2D80D600E9F016 /* PropertyWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyWrappers.swift; sourceTree = "<group>"; };
+		667BD2A62C2D8C6A00E9F016 /* Task+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +85,8 @@
 				667BD27B2C2C9DC700E9F016 /* AutoMotionStudio.entitlements */,
 				667BD2952C2CCEC900E9F016 /* Views */,
 				667BD2872C2CA37200E9F016 /* Models */,
-				667BD2982C2D4E8C00E9F016 /* Entities */,
+				667BD2982C2D4E8C00E9F016 /* Types */,
+				667BD2A52C2D8C5F00E9F016 /* Extensions */,
 				667BD2962C2CCEEC00E9F016 /* Globals */,
 				667BD2782C2C9DC700E9F016 /* Preview Content */,
 			);
@@ -110,6 +117,7 @@
 			children = (
 				667BD2742C2C9DC500E9F016 /* ContentView.swift */,
 				667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */,
+				667BD2A12C2D7A7600E9F016 /* ActionListElement.swift */,
 				667BD28A2C2CA3DA00E9F016 /* ActionDetailView.swift */,
 			);
 			path = Views;
@@ -124,12 +132,21 @@
 			path = Globals;
 			sourceTree = "<group>";
 		};
-		667BD2982C2D4E8C00E9F016 /* Entities */ = {
+		667BD2982C2D4E8C00E9F016 /* Types */ = {
 			isa = PBXGroup;
 			children = (
 				667BD2832C2CA34200E9F016 /* ActionType.swift */,
+				667BD2A32C2D80D600E9F016 /* PropertyWrappers.swift */,
 			);
-			path = Entities;
+			path = Types;
+			sourceTree = "<group>";
+		};
+		667BD2A52C2D8C5F00E9F016 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				667BD2A62C2D8C6A00E9F016 /* Task+.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,9 +231,12 @@
 				667BD2922C2CB94200E9F016 /* KeyboardShortcuts.swift in Sources */,
 				667BD2A02C2D74D600E9F016 /* CGFloat+.swift in Sources */,
 				667BD2942C2CBD4300E9F016 /* AppState.swift in Sources */,
+				667BD2A22C2D7A7600E9F016 /* ActionListElement.swift in Sources */,
 				667BD29E2C2D73E600E9F016 /* CGPoint+.swift in Sources */,
+				667BD2A72C2D8C6A00E9F016 /* Task+.swift in Sources */,
 				667BD28B2C2CA3DA00E9F016 /* ActionDetailView.swift in Sources */,
 				667BD2862C2CA35A00E9F016 /* Action.swift in Sources */,
+				667BD2A42C2D80D600E9F016 /* PropertyWrappers.swift in Sources */,
 				667BD2892C2CA3A300E9F016 /* AutoMotionModel.swift in Sources */,
 				667BD2842C2CA34200E9F016 /* ActionType.swift in Sources */,
 			);

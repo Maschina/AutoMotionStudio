@@ -9,4 +9,5 @@ import KeyboardShortcuts
 
 extension KeyboardShortcuts.Name {
 	static let getCurrentMouseCoordinates = Self("getCurrentMouseCoordinates")
+	static let stopRun = Self("stopRun")
 }

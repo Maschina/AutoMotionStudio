@@ -12,12 +12,19 @@ struct ContentViewToolbar: ToolbarContent {
 	
 	var body: some ToolbarContent {
 		ToolbarItem(placement: .navigation) {
-			Button("Run", systemImage: "play.fill") {
-				viewModel.executeActions()
+			if !viewModel.isExecuting {
+				Button("Run", systemImage: "play.fill") {
+					viewModel.executeActions()
+				}
+			} else {
+				Button("Stop", systemImage: "stop.fill") {
+					viewModel.cancelActions()
+				}
 			}
 		}
 		
-		ToolbarItem(placement: .primaryAction) {
+		ToolbarItemGroup(placement: .primaryAction) {
+			Spacer()
 			Menu {
 				ForEach(ActionType.allCases) { type in
 					Button(action: {

@@ -12,17 +12,24 @@ import KeyboardShortcuts
 class AutoMotionModel {
 	var actions: [Action] = []
 	var selectedAction: Action?
+	var isExecuting: Bool = false
 	
-	private var executionTask: Task<Void, Never>?
+	private var executionTask: Task<Void, any Error>?
 	
 	init() {
 		initKeyboardObserver()
 	}
 	
 	private func initKeyboardObserver() {
-		Task {
+		Task { [weak self] in
 			for await event in KeyboardShortcuts.events(for: .getCurrentMouseCoordinates) where event == .keyUp {
-				selectedAction?.setCurrentMouseCoordinates()
+				self?.selectedAction?.setCurrentMouseCoordinates()
+			}
+		}
+		
+		Task { [weak self] in
+			for await event in KeyboardShortcuts.events(for: .stopRun) where event == .keyUp {
+				self?.cancelActions()
 			}
 		}
 	}
@@ -34,17 +41,27 @@ class AutoMotionModel {
 		return newAction
 	}
 	
-	func executeActions() {
-		executionTask = Task { [weak self] in
-			for action in self?.actions ?? [] {
-				try? Task.checkCancellation()
-				action.execute()
-				try? await Task.sleep(nanoseconds: UInt64(2 * 1_000_000_000))
-			}
-		}
+	func cancelActions() {
+		self.executionTask?.cancel()
+		self.isExecuting = false
 	}
 	
-	func cancelActions() {
-		executionTask?.cancel()
+	func executeActions() {
+		print("Executing actions…")
+		
+		self.cancelActions()
+		self.isExecuting = true
+		
+		self.executionTask = Task { [weak self] in
+			for action in self?.actions ?? [] {
+				try Task.checkCancellation()
+				try await Task.sleep(duration: action.delay)
+				action.execute()
+			}
+			
+			self?.isExecuting = false
+			
+			print("Completed run")
+		}
 	}
 }

@@ -13,13 +13,24 @@ import Cocoa
 class Action: Identifiable {
 	var id: UUID = .init()
 	var type: ActionType
-	var mouseCoordinates: CGPoint = .init(x: 0, y: 0)
-	var humanizedMouseMovement: Bool = true
+	var mouseCoordinates: CGPoint
+	var humanizedMouseMovement: Bool
 	/// Easing means ramping up the movement smoothly in the beginning, and ramping it down towards the end.
-	var easing: CGFloat = 100
+	var easing: CGFloat
+	var delay: Duration
 	
-	init(type: ActionType) {
+	init(
+		type: ActionType,
+		mouseCoordinates: CGPoint = .init(x: 0, y: 0),
+		humanizedMouseMovement: Bool = true,
+		easing: CGFloat = 100,
+		delay: Duration = .zero
+	) {
 		self.type = type
+		self.mouseCoordinates = mouseCoordinates
+		self.humanizedMouseMovement = humanizedMouseMovement
+		self.easing = easing
+		self.delay = delay
 	}
 	
 	func setCurrentMouseCoordinates() {

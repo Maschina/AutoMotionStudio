@@ -6,63 +6,75 @@
 //
 
 import SwiftUI
+import SwiftData
 import KeyboardShortcuts
 
 struct ContentView: View {
-	@State private var viewModel = AutoMotionModel()
+	@Environment(\.modelContext) var modelContext
+	@Query(sort: \Action.listIndex, animation: .default) var actions: [Action]
+	@State private var selectedAction: Action?
 	
     var body: some View {
 		NavigationSplitView {
-			List(selection: $viewModel.selectedAction) {
-				ForEach(viewModel.actions) { action in
+			List(selection: $selectedAction) {
+				ForEach(actions) { action in
 					ActionListElement(action: action)
+						.padding(.vertical, 3)
 						.tag(action)
 				}
-				.onDelete(perform: { indexSet in
-					withAnimation {
-						viewModel.actions.remove(atOffsets: indexSet)
-					}
-				})
+				.onMove(perform: onMove)
+				.onDelete(perform: onDelete)
 			}
-			.listStyle(.sidebar)
 			.frame(minWidth: 180, idealWidth: 200)
 			.toolbar {
-				ContentViewToolbar(viewModel: viewModel)
+				ContentViewToolbar()
 			}
 		} detail: {
-			if let selectedAction = viewModel.selectedAction {
+			if let selectedAction = selectedAction {
 				ActionDetailView(action: selectedAction)
 					.toolbar {
 						ToolbarItem(placement: .destructiveAction) {
 							Button("Delete", systemImage: "trash") {
-								withAnimation {
-									deleteSelectedAction()
-								}
+								deleteSelectedAction()
 							}
 						}
 					}
 			} else {
-				Text("Select an action")
+				Text("Select Action")
 					.foregroundColor(.gray)
 			}
 		}
 		.onDeleteCommand {
-			withAnimation {
-				deleteSelectedAction()
+			deleteSelectedAction()
+		}
+		.task {
+			for await event in KeyboardShortcuts.events(for: .getCurrentMouseCoordinates) where event == .keyUp {
+				self.selectedAction?.setCurrentMouseCoordinates()
 			}
 		}
     }
 	
-	private func binding(for action: Action) -> Binding<Action> {
-		guard let index = viewModel.actions.firstIndex(where: { $0.id == action.id }) else {
-			fatalError("Action not found")
+	private func onMove(indices: IndexSet, newOffset: Int) {
+		var s = actions.sorted(by: { $0.listIndex < $1.listIndex })
+		s.move(fromOffsets: indices, toOffset: newOffset)
+		for (index, item) in s.enumerated() {
+			item.listIndex = index
 		}
-		return $viewModel.actions[index]
+		try? modelContext.save()
+	}
+	
+	private func onDelete(indices: IndexSet) {
+		for i in indices {
+			let action = actions[i]
+			modelContext.delete(action)
+		}
 	}
 	
 	private func deleteSelectedAction() {
-		viewModel.actions.removeAll(where: { viewModel.selectedAction == $0 })
-		viewModel.selectedAction = nil
+		if let selectedAction {
+			modelContext.delete(selectedAction)
+			self.selectedAction = nil
+		}
 	}
 }
 

@@ -8,16 +8,20 @@
 import Foundation
 import KeyboardShortcuts
 import Cocoa
+import SwiftData
 
-@Observable
-class Action: Identifiable, Codable {
-	var id: UUID = .init()
+typealias Actions = [Action]
+
+@Model
+class Action: Identifiable {
+	@Attribute(.unique) var id: UUID = UUID()
 	var type: ActionType
-	var mouseCoordinates: CGPoint = .init(x: 0, y: 0)
+	var mouseCoordinates: Point = Point(x: 0, y: 0)
 	var humanizedMouseMovement: Bool = true
 	/// Easing means ramping up the movement smoothly in the beginning, and ramping it down towards the end.
 	var easing: CGFloat = 300
-	var delay: Duration = .milliseconds(500)
+	var delay: TimeInterval = 0.5
+	var listIndex: Int = 0
 	
 	init(
 		type: ActionType
@@ -27,7 +31,7 @@ class Action: Identifiable, Codable {
 	
 	func setCurrentMouseCoordinates() {
 		let coordinates = AppState.shared.cgMouseLocation
-		mouseCoordinates = coordinates
+		mouseCoordinates = Point(coordinates)
 	}
 	
 	func execute() {
@@ -59,7 +63,7 @@ extension Action {
 			CGEvent(
 				mouseEventSource: CGEventSource(stateID: CGEventSourceStateID.hidSystemState),
 				mouseType: .mouseMoved,
-				mouseCursorPosition: mouseCoordinates,
+				mouseCursorPosition: mouseCoordinates.cgPoint,
 				mouseButton: .left
 			)?.post(tap: CGEventTapLocation.cghidEventTap)
 		}
@@ -76,7 +80,7 @@ extension Action {
 		CGEvent(
 			mouseEventSource: CGEventSource(stateID: CGEventSourceStateID.hidSystemState),
 			mouseType: mouseDownType,
-			mouseCursorPosition: mouseCoordinates,
+			mouseCursorPosition: mouseCoordinates.cgPoint,
 			mouseButton: mouseButton
 		)?.post(tap: CGEventTapLocation.cghidEventTap)
 		
@@ -84,7 +88,7 @@ extension Action {
 		CGEvent(
 			mouseEventSource: CGEventSource(stateID: CGEventSourceStateID.hidSystemState),
 			mouseType: mouseUpType,
-			mouseCursorPosition: mouseCoordinates,
+			mouseCursorPosition: mouseCoordinates.cgPoint,
 			mouseButton: mouseButton
 		)?.post(tap: CGEventTapLocation.cghidEventTap)
 	}
@@ -96,7 +100,7 @@ extension Action {
 		CGEvent(
 			mouseEventSource: CGEventSource(stateID: CGEventSourceStateID.hidSystemState),
 			mouseType: .leftMouseDown,
-			mouseCursorPosition: mouseCoordinates,
+			mouseCursorPosition: mouseCoordinates.cgPoint,
 			mouseButton: .left
 		)?.post(tap: CGEventTapLocation.cghidEventTap)
 	}
@@ -109,7 +113,7 @@ extension Action {
 		CGEvent(
 			mouseEventSource: CGEventSource(stateID: CGEventSourceStateID.hidSystemState),
 			mouseType: .leftMouseUp,
-			mouseCursorPosition: mouseCoordinates,
+			mouseCursorPosition: mouseCoordinates.cgPoint,
 			mouseButton: .left
 		)?.post(tap: CGEventTapLocation.cghidEventTap)
 	}
@@ -119,7 +123,7 @@ extension Action {
 	private func humanizedMouseAction(eventType: CGEventType, mouseButton: CGMouseButton) {
 		let from = AppState.shared.cgMouseLocation
 		
-		let distance = from.distance(to: mouseCoordinates)
+		let distance = from.distance(to: mouseCoordinates.cgPoint)
 		let steps = Int(distance * CGFloat(easing) / 100) + 1;
 		let xDiff = mouseCoordinates.x - from.x
 		let yDiff = mouseCoordinates.y - from.y

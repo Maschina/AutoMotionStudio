@@ -10,6 +10,11 @@ import SwiftUI
 struct ActionListElement: View {
 	@Bindable var action: Action
 	
+	var delay: Duration {
+		let modf = modf(action.delay)
+		return Duration(secondsComponent: Int64(modf.0), attosecondsComponent: Int64(modf.1) * 1_000_000_000_000_000_000)
+	}
+	
     var body: some View {
 		VStack(alignment: .leading, spacing: 5) {
 			Text(action.type.description)
@@ -20,8 +25,8 @@ struct ActionListElement: View {
 						.help("Humanized easing factor")
 				}
 				
-				if action.delay != .zero {
-					Label("\(action.delay, format: .time(pattern: .minuteSecond(padMinuteToLength: 2, fractionalSecondsLength: 2, roundFractionalSeconds: .toNearestOrEven)))", systemImage: "timer")
+				if action.delay != 0 {
+					Label("\(delay, format: .time(pattern: .minuteSecond(padMinuteToLength: 2, fractionalSecondsLength: 2, roundFractionalSeconds: .toNearestOrEven)))", systemImage: "timer")
 						.help("Trigger Delay")
 				}
 			}
@@ -33,7 +38,7 @@ struct ActionListElement: View {
 
 #Preview {
 	let action = Action(type: .linearMove)
-	action.delay = .seconds(2)
+	action.delay = 2
 	return ActionListElement(action: action)
 		.padding()
 }

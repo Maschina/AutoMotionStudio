@@ -6,32 +6,38 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentViewToolbar: ToolbarContent {
-	@Bindable var viewModel: AutoMotionModel
+	@Environment(\.modelContext) var modelContext
+	@Query(sort: \Action.listIndex) var actions: [Action]
+	
+	@State private var runtime = ActionRuntime()
+	@State private var runtimeTask: Task<Void, Never>? = nil
 	
 	var body: some ToolbarContent {
 		ToolbarItem(placement: .navigation) {
-			if !viewModel.isExecuting {
+			if !runtime.isExecuting {
 				Button("Run", systemImage: "play.fill") {
-					viewModel.executeActions()
+					runtimeTask = Task {
+						await runtime.execute(with: actions)
+					}
 				}
 			} else {
 				Button("Stop", systemImage: "stop.fill") {
-					viewModel.cancelActions()
+					runtimeTask?.cancel()
+					runtime.isExecuting = false
 				}
 			}
 		}
 		
 		ToolbarItemGroup(placement: .primaryAction) {
-			Spacer()
+			Spacer(minLength: 0)
 			Menu {
 				ForEach(ActionType.allCases) { type in
 					Button(type.description) {
-						withAnimation {
-							let action = viewModel.addAction(type: type)
-							viewModel.selectedAction = action
-						}
+						let action = Action(type: type)
+						modelContext.insert(action)
 					}
 				}
 			} label: {

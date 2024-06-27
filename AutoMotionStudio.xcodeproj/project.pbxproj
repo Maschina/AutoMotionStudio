@@ -11,14 +11,16 @@
 		667BD2752C2C9DC500E9F016 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2742C2C9DC500E9F016 /* ContentView.swift */; };
 		667BD2772C2C9DC700E9F016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 667BD2762C2C9DC700E9F016 /* Assets.xcassets */; };
 		667BD27A2C2C9DC700E9F016 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 667BD2792C2C9DC700E9F016 /* Preview Assets.xcassets */; };
-		667BD2822C2C9DED00E9F016 /* demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2812C2C9DED00E9F016 /* demo.swift */; };
 		667BD2842C2CA34200E9F016 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2832C2CA34200E9F016 /* ActionType.swift */; };
 		667BD2862C2CA35A00E9F016 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2852C2CA35A00E9F016 /* Action.swift */; };
-		667BD2892C2CA3A300E9F016 /* ActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2882C2CA3A300E9F016 /* ActionViewModel.swift */; };
+		667BD2892C2CA3A300E9F016 /* AutoMotionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2882C2CA3A300E9F016 /* AutoMotionModel.swift */; };
 		667BD28B2C2CA3DA00E9F016 /* ActionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD28A2C2CA3DA00E9F016 /* ActionDetailView.swift */; };
 		667BD2902C2CB90A00E9F016 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 667BD28F2C2CB90A00E9F016 /* KeyboardShortcuts */; };
 		667BD2922C2CB94200E9F016 /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2912C2CB94200E9F016 /* KeyboardShortcuts.swift */; };
 		667BD2942C2CBD4300E9F016 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2932C2CBD4300E9F016 /* AppState.swift */; };
+		667BD29A2C2D547000E9F016 /* ContentViewToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */; };
+		667BD29E2C2D73E600E9F016 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD29D2C2D73E600E9F016 /* CGPoint+.swift */; };
+		667BD2A02C2D74D600E9F016 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD29F2C2D74D600E9F016 /* CGFloat+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,13 +30,16 @@
 		667BD2762C2C9DC700E9F016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		667BD2792C2C9DC700E9F016 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		667BD27B2C2C9DC700E9F016 /* AutoMotionStudio.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutoMotionStudio.entitlements; sourceTree = "<group>"; };
-		667BD2812C2C9DED00E9F016 /* demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = demo.swift; sourceTree = "<group>"; };
 		667BD2832C2CA34200E9F016 /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		667BD2852C2CA35A00E9F016 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		667BD2882C2CA3A300E9F016 /* ActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewModel.swift; sourceTree = "<group>"; };
+		667BD2882C2CA3A300E9F016 /* AutoMotionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMotionModel.swift; sourceTree = "<group>"; };
 		667BD28A2C2CA3DA00E9F016 /* ActionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionDetailView.swift; sourceTree = "<group>"; };
 		667BD2912C2CB94200E9F016 /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
 		667BD2932C2CBD4300E9F016 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		667BD2972C2D4E2300E9F016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewToolbar.swift; sourceTree = "<group>"; };
+		667BD29D2C2D73E600E9F016 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
+		667BD29F2C2D74D600E9F016 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,12 +73,13 @@
 		667BD2712C2C9DC500E9F016 /* AutoMotionStudio */ = {
 			isa = PBXGroup;
 			children = (
+				667BD2972C2D4E2300E9F016 /* Info.plist */,
 				667BD2722C2C9DC500E9F016 /* AutoMotionStudioApp.swift */,
 				667BD2762C2C9DC700E9F016 /* Assets.xcassets */,
 				667BD27B2C2C9DC700E9F016 /* AutoMotionStudio.entitlements */,
-				667BD2812C2C9DED00E9F016 /* demo.swift */,
 				667BD2952C2CCEC900E9F016 /* Views */,
 				667BD2872C2CA37200E9F016 /* Models */,
+				667BD2982C2D4E8C00E9F016 /* Entities */,
 				667BD2962C2CCEEC00E9F016 /* Globals */,
 				667BD2782C2C9DC700E9F016 /* Preview Content */,
 			);
@@ -91,9 +97,10 @@
 		667BD2872C2CA37200E9F016 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				667BD2832C2CA34200E9F016 /* ActionType.swift */,
+				667BD2882C2CA3A300E9F016 /* AutoMotionModel.swift */,
 				667BD2852C2CA35A00E9F016 /* Action.swift */,
-				667BD2882C2CA3A300E9F016 /* ActionViewModel.swift */,
+				667BD29D2C2D73E600E9F016 /* CGPoint+.swift */,
+				667BD29F2C2D74D600E9F016 /* CGFloat+.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -102,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				667BD2742C2C9DC500E9F016 /* ContentView.swift */,
+				667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */,
 				667BD28A2C2CA3DA00E9F016 /* ActionDetailView.swift */,
 			);
 			path = Views;
@@ -114,6 +122,14 @@
 				667BD2912C2CB94200E9F016 /* KeyboardShortcuts.swift */,
 			);
 			path = Globals;
+			sourceTree = "<group>";
+		};
+		667BD2982C2D4E8C00E9F016 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				667BD2832C2CA34200E9F016 /* ActionType.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,14 +208,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				667BD29A2C2D547000E9F016 /* ContentViewToolbar.swift in Sources */,
 				667BD2752C2C9DC500E9F016 /* ContentView.swift in Sources */,
 				667BD2732C2C9DC500E9F016 /* AutoMotionStudioApp.swift in Sources */,
 				667BD2922C2CB94200E9F016 /* KeyboardShortcuts.swift in Sources */,
+				667BD2A02C2D74D600E9F016 /* CGFloat+.swift in Sources */,
 				667BD2942C2CBD4300E9F016 /* AppState.swift in Sources */,
-				667BD2822C2C9DED00E9F016 /* demo.swift in Sources */,
+				667BD29E2C2D73E600E9F016 /* CGPoint+.swift in Sources */,
 				667BD28B2C2CA3DA00E9F016 /* ActionDetailView.swift in Sources */,
 				667BD2862C2CA35A00E9F016 /* Action.swift in Sources */,
-				667BD2892C2CA3A300E9F016 /* ActionViewModel.swift in Sources */,
+				667BD2892C2CA3A300E9F016 /* AutoMotionModel.swift in Sources */,
 				667BD2842C2CA34200E9F016 /* ActionType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,6 +357,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AutoMotionStudio/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "AutoMotion Studio";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -369,6 +388,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AutoMotionStudio/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "AutoMotion Studio";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";

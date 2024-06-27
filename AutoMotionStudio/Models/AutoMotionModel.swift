@@ -9,7 +9,7 @@ import Foundation
 import KeyboardShortcuts
 
 @Observable
-class ActionViewModel {
+class AutoMotionModel {
 	var actions: [Action] = []
 	var selectedAction: Action?
 	

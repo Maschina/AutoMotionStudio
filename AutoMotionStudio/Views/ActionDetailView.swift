@@ -32,7 +32,7 @@ struct ActionDetailView: View {
 			Section {
 				Picker("Action Type", selection: $action.type) {
 					ForEach(ActionType.allCases) { type in
-						Text(type.rawValue)
+						Text(type.description)
 							.tag(type)
 					}
 				}
@@ -40,15 +40,26 @@ struct ActionDetailView: View {
 			}
 			
 			Section {
-				TextField("X", value: xCoordinate, format: .number)
+				TextField("X", value: xCoordinate, format: .number.precision(.fractionLength(3)))
 					.fontDesign(.monospaced)
 				
-				TextField("Y", value: yCoordinate, format: .number)
+				TextField("Y", value: yCoordinate, format: .number.precision(.fractionLength(3)))
 					.fontDesign(.monospaced)
 			} header: {
 				Text("Target Mouse Coordinates")
 			} footer: {
 				KeyboardShortcuts.Recorder("Get Current Mouse Coordinates:", name: .getCurrentMouseCoordinates)
+					.foregroundStyle(Color.secondary)
+			}
+			
+			Section("Mouse Dynamics") {
+				Toggle("Humanized", isOn: $action.humanizedMouseMovement)
+				
+				if action.humanizedMouseMovement {
+					Slider(value: $action.easing, in: 50...2500) {
+						Text("Easing")
+					}
+				}
 			}
 		}
 		.formStyle(.grouped)
@@ -57,6 +68,7 @@ struct ActionDetailView: View {
 }
 
 #Preview {
-	let action = Action(type: .mouseMove)
+	let action = Action(type: .linearMove)
 	return ActionDetailView(action: action)
+		.frame(width: 400)
 }

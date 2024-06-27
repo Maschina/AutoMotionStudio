@@ -14,52 +14,77 @@ class Action: Identifiable {
 	var id: UUID = .init()
 	var type: ActionType
 	var mouseCoordinates: CGPoint = .init(x: 0, y: 0)
+	var humanizedMouseMovement: Bool = true
+	/// Easing means ramping up the movement smoothly in the beginning, and ramping it down towards the end.
+	var easing: CGFloat = 100
 	
 	init(type: ActionType) {
 		self.type = type
 	}
 	
 	func setCurrentMouseCoordinates() {
-		let coordinates = AppState.shared.mouseLocation
+		let coordinates = AppState.shared.cgMouseLocation
 		mouseCoordinates = coordinates
 	}
 	
 	func execute() {
 		switch type {
-			case .mouseMove:
-				humanizedMouseMove()
-			case .mousePrimaryClick:
+			case .linearMove:
+				mouseMove()
+				
+			case .primaryClick:
+				mouseMove()
 				mouseClick(mouseButton: .left)
-			case .mouseSecondaryClick:
+				
+			case .secondaryClick:
+				mouseMove()
 				mouseClick(mouseButton: .right)
-			case .mousePrimaryDrag:
+				
+			case .dragStart:
+				mouseMove()
 				mouseDrag(mouseButton: .left)
-			case .mouseSecondaryDrag:
+				
+			case .dragEnd:
+				mouseMove()
 				mouseDrag(mouseButton: .right)
 		}
 	}
 }
 
 extension Action {
-	// Moves the mouse from point `from` to point `to`, with some `easing` factor.
-	// Easing means ramping up the movement smoothly in the beginning, and ramping it down towards the end.
-	// The cheap "humanized" factor.
-	private func humanizedMouseMove(easing: Float = 100.0) {
-		let from = AppState.shared.mouseLocation
-		
-		print("current location: ", from)
-		print("moving to: ", mouseCoordinates)
-		let distance = distanceBetween(from: from, to: mouseCoordinates)
-		let steps = Int(distance * CGFloat(easing) / 100) + 1;
-		let xDiff = mouseCoordinates.x - from.x
-		let yDiff = mouseCoordinates.y - from.y
-		let stepSize = 1.0 / Double(steps)
-		
-		for i in 0 ... steps {
-			let factor = cubicEaseOut(point: Float(stepSize) * Float(i))
-			let stepPoint = CGPoint(x: from.x + (CGFloat(factor) * xDiff), y: from.y + (CGFloat(factor) * yDiff))
-			CGEvent(mouseEventSource: nil, mouseType: CGEventType.mouseMoved, mouseCursorPosition: stepPoint, mouseButton: CGMouseButton.left)?.post(tap: CGEventTapLocation.cghidEventTap)
-			usleep(useconds_t(stepPause()))
+	private func mouseMove() {
+		if !humanizedMouseMovement {
+			let source = CGEventSource(stateID: CGEventSourceStateID.hidSystemState)
+			CGEvent(
+				mouseEventSource: source,
+				mouseType: CGEventType.mouseMoved,
+				mouseCursorPosition: mouseCoordinates,
+				mouseButton: CGMouseButton.left
+			)?.post(tap: CGEventTapLocation.cghidEventTap)
+			
+		} else {
+			let from = AppState.shared.cgMouseLocation
+			
+			let distance = from.distance(to: mouseCoordinates)
+			let steps = Int(distance * CGFloat(easing) / 100) + 1;
+			let xDiff = mouseCoordinates.x - from.x
+			let yDiff = mouseCoordinates.y - from.y
+			let stepSize = 1.0 / CGFloat(steps)
+			
+			for i in 0...steps {
+				let factor = (stepSize * CGFloat(i)).cubicEaseOut()
+				let stepPoint = CGPoint(x: from.x + (factor * xDiff), y: from.y + (factor * yDiff))
+				
+				let source = CGEventSource(stateID: CGEventSourceStateID.hidSystemState)
+				CGEvent(
+					mouseEventSource: source,
+					mouseType: CGEventType.mouseMoved,
+					mouseCursorPosition: stepPoint,
+					mouseButton: CGMouseButton.left
+				)?.post(tap: CGEventTapLocation.cghidEventTap)
+				
+				usleep(useconds_t(Int.random(in: 200..<300)))
+			}
 		}
 	}
 	

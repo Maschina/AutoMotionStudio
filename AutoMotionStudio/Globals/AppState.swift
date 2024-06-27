@@ -16,6 +16,12 @@ final class AppState: ObservableObject {
 		NSEvent.mouseLocation
 	}
 	
+	var cgMouseLocation: CGPoint {
+		let location = self.mouseLocation
+		let cgPoint = CGPoint(x: location.x, y: CGDisplayBounds(CGMainDisplayID()).height - location.y)
+		return cgPoint
+	}
+	
 	private init() {
 
 	}

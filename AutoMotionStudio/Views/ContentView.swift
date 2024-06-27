@@ -9,38 +9,18 @@ import SwiftUI
 import KeyboardShortcuts
 
 struct ContentView: View {
-	@State private var viewModel = ActionViewModel()
+	@State private var viewModel = AutoMotionModel()
 	
     var body: some View {
 		NavigationSplitView {
 			List(viewModel.actions, selection: $viewModel.selectedAction) { action in
-				Text(action.type.rawValue)
+				Text("\(action.type.description)")
 					.tag(action)
 			}
 			.listStyle(.sidebar)
+			.frame(minWidth: 180, idealWidth: 200)
 			.toolbar {
-				ToolbarItem(placement: .navigation) {
-					Button("Run", systemImage: "play.fill") {
-						viewModel.executeActions()
-					}
-				}
-				
-				ToolbarItem(placement: .primaryAction) {
-					Menu {
-						ForEach(ActionType.allCases) { type in
-							Button(action: {
-								let action = viewModel.addAction(type: type)
-								viewModel.selectedAction = action
-							}) {
-								Text(type.rawValue)
-									.padding()
-							}
-						}
-					} label: {
-						Label("Add Action", systemImage: "plus")
-					}
-					.menuIndicator(.hidden)
-				}
+				ContentViewToolbar(viewModel: viewModel)
 			}
 		} detail: {
 			if let selectedAction = viewModel.selectedAction {

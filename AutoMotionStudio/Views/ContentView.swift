@@ -35,8 +35,9 @@ struct ContentView: View {
 					.toolbar {
 						ToolbarItem(placement: .destructiveAction) {
 							Button("Delete", systemImage: "trash") {
-								viewModel.actions.removeAll(where: { selectedAction == $0 })
-								viewModel.selectedAction = nil
+								withAnimation {
+									deleteSelectedAction()
+								}
 							}
 						}
 					}
@@ -47,9 +48,7 @@ struct ContentView: View {
 		}
 		.onDeleteCommand {
 			withAnimation {
-				if let selectedAction = viewModel.selectedAction {
-					viewModel.actions.removeAll(where: { selectedAction == $0 })
-				}
+				deleteSelectedAction()
 			}
 		}
     }
@@ -59,6 +58,11 @@ struct ContentView: View {
 			fatalError("Action not found")
 		}
 		return $viewModel.actions[index]
+	}
+	
+	private func deleteSelectedAction() {
+		viewModel.actions.removeAll(where: { viewModel.selectedAction == $0 })
+		viewModel.selectedAction = nil
 	}
 }
 

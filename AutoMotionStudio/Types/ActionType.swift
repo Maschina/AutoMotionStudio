@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ActionType: Identifiable, CaseIterable {
+enum ActionType: Identifiable, CaseIterable, Codable {
 	case linearMove
 	case primaryClick
 	case secondaryClick

@@ -27,12 +27,11 @@ struct ContentViewToolbar: ToolbarContent {
 			Spacer()
 			Menu {
 				ForEach(ActionType.allCases) { type in
-					Button(action: {
-						let action = viewModel.addAction(type: type)
-						viewModel.selectedAction = action
-					}) {
-						Text(type.description)
-							.padding()
+					Button(type.description) {
+						withAnimation {
+							let action = viewModel.addAction(type: type)
+							viewModel.selectedAction = action
+						}
 					}
 				}
 			} label: {

@@ -32,7 +32,8 @@ struct ActionListElement: View {
 }
 
 #Preview {
-	let action = Action(type: .linearMove, delay: .seconds(2))
+	let action = Action(type: .linearMove)
+	action.delay = .seconds(2)
 	return ActionListElement(action: action)
 		.padding()
 }

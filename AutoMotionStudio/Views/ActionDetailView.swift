@@ -75,12 +75,14 @@ struct ActionDetailView: View {
 					}
 
 					
-					TextField(value: secondsBinding, format: .number.precision(.fractionLength(2))) { ControlGroup {
-							Button(action: { action.delay += .milliseconds(500) }, label: {
-								Image(systemName: "plus")
-							})
+					TextField(value: secondsBinding, format: .number.precision(.fractionLength(2))) { 
+						ControlGroup {
 							Button(action: { action.delay -= .milliseconds(500) }, label: {
 								Image(systemName: "minus")
+							})
+							
+							Button(action: { action.delay += .milliseconds(500) }, label: {
+								Image(systemName: "plus")
 							})
 						}
 					}

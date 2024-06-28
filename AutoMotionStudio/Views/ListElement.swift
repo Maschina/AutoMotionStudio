@@ -20,10 +20,9 @@ struct ListElement: View {
 			Text(action.type.description)
 			
 			HStack {
-				if let factor = action.mouseEasing.cubicFactor {
-					Label("\(factor, format: .number.precision(.fractionLength(0)))", systemImage: "figure.walk.motion")
-						.contentTransition(.numericText())
-						.help("Humanized easing factor")
+				if action.mouseEasing.cubicFactor != nil {
+					Label("\(action.mouseEasing.cubicSemanticDescription)", systemImage: "computermouse")
+						.help("Mouse Easing Speed")
 				}
 				
 				if action.delay != 0 {

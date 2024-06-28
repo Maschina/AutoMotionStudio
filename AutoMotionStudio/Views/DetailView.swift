@@ -11,34 +11,16 @@ import KeyboardShortcuts
 struct DetailView: View {
 	@Bindable var action: Action
 	
-	var xCoordinate: Binding<Double> {
-		Binding {
-			action.mouseCoordinates.x
-		} set: { newValue in
-			action.mouseCoordinates.x = newValue
-		}
-	}
-	
-	var yCoordinate: Binding<Double> {
-		Binding {
-			action.mouseCoordinates.y
-		} set: { newValue in
-			action.mouseCoordinates.y = newValue
-		}
-	}
-	
 	var body: some View {
 		Form {
 			actionTypeView
-			mouseCoordinatesView
-			mouseDynamicsView
+			MouseCoordinatesView(action: action)
 			triggerDelayView
+			mouseDynamicsView
 		}
 		.formStyle(.grouped)
-		.padding()
 	}
 	
-	@ViewBuilder
 	var actionTypeView: some View {
 		Section {
 			Picker("Action Type", selection: $action.type) {
@@ -51,23 +33,54 @@ struct DetailView: View {
 		}
 	}
 	
-	@ViewBuilder
-	var mouseCoordinatesView: some View {
-		Section {
-			TextField("X", value: xCoordinate, format: .number.precision(.fractionLength(3)))
-				.fontDesign(.monospaced)
-			
-			TextField("Y", value: yCoordinate, format: .number.precision(.fractionLength(3)))
-				.fontDesign(.monospaced)
-		} header: {
-			Text("Target Mouse Coordinates")
-		} footer: {
-			KeyboardShortcuts.Recorder("Get Current Mouse Coordinates:", name: .getCurrentMouseCoordinates)
-				.foregroundStyle(Color.secondary)
+	struct MouseCoordinatesView: View {
+		@Bindable var action: Action
+		
+		var xCoordinate: Binding<Double> {
+			Binding {
+				action.mouseCoordinates.x
+			} set: { newValue in
+				action.mouseCoordinates.x = newValue
+			}
+		}
+		
+		var yCoordinate: Binding<Double> {
+			Binding {
+				action.mouseCoordinates.y
+			} set: { newValue in
+				action.mouseCoordinates.y = newValue
+			}
+		}
+		
+		@MainActor
+		var shortcutDescriptionGetMouseCoordinates: String? {
+			guard let shortcut = KeyboardShortcuts.getShortcut(for: .getCurrentMouseCoordinates) else {
+				return nil
+			}
+			return shortcut.description
+		}
+		
+		var body: some View {
+			Section {
+				TextField("X", value: xCoordinate, format: .number.precision(.fractionLength(3)))
+					.fontDesign(.monospaced)
+				
+				TextField("Y", value: yCoordinate, format: .number.precision(.fractionLength(3)))
+					.fontDesign(.monospaced)
+			} header: {
+				Text("Target Mouse Coordinates")
+			} footer: {
+				if let shortcutDescriptionGetMouseCoordinates {
+					Text("Press \(shortcutDescriptionGetMouseCoordinates) to get current mouse coordinates.")
+						.foregroundStyle(Color.secondary)
+						.font(.footnote)
+					SettingsLink()
+						.controlSize(.small)
+				}
+			}
 		}
 	}
 	
-	@ViewBuilder
 	var mouseDynamicsView: some View {
 		Section("Mouse Dynamics") {
 			// mouse cubic easing
@@ -98,7 +111,7 @@ struct DetailView: View {
 				Slider(
 					value: mouseEasingFactor,
 					in: MouseEasing.cubicLowerBound...MouseEasing.cubicUpperBound,
-					label: { Text("Factor") },
+					label: { Text("Speed") },
 					minimumValueLabel: { Image(systemName: "tortoise") },
 					maximumValueLabel: { Image(systemName: "hare") }
 				)
@@ -106,7 +119,6 @@ struct DetailView: View {
 		}
 	}
 	
-	@ViewBuilder
 	var triggerDelayView: some View {
 		Section("Trigger Delay") {
 			HStack {

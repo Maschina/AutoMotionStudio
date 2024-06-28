@@ -31,5 +31,9 @@ struct AutoMotionStudioApp: App {
 				.environment(appState)
         }
 		.modelContainer(sharedModelContainer)
+		
+		Settings {
+			SettingsView()
+		}
     }
 }

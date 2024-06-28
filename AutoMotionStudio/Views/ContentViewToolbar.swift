@@ -34,16 +34,25 @@ struct ContentViewToolbar: ToolbarContent {
 		ToolbarItemGroup(placement: .primaryAction) {
 			Spacer(minLength: 0)
 			Menu {
-				ForEach(ActionType.allCases) { type in
-					Button(type.description) {
-						let action = Action(type: type)
-						modelContext.insert(action)
-					}
-				}
+				Button(actionType: .linearMove, modelContext: modelContext)
+				Divider()
+				Button(actionType: .primaryClick, modelContext: modelContext)
+				Button(actionType: .secondaryClick, modelContext: modelContext)
+				Button(actionType: .dragStart, modelContext: modelContext)
+				Button(actionType: .dragEnd, modelContext: modelContext)
 			} label: {
 				Label("Add Action", systemImage: "plus")
 			}
 			.menuIndicator(.hidden)
+		}
+	}
+}
+
+extension Button where Label == Text {
+	init(actionType: ActionType, modelContext: ModelContext) {
+		self.init(actionType.description) {
+			let action = Action(type: actionType)
+			modelContext.insert(action)
 		}
 	}
 }

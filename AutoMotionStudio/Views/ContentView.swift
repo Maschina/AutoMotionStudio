@@ -18,7 +18,7 @@ struct ContentView: View {
 		NavigationSplitView {
 			List(selection: $selectedAction) {
 				ForEach(actions) { action in
-					ActionListElement(action: action)
+					ListElement(action: action)
 						.padding(.vertical, 3)
 						.tag(action)
 				}
@@ -31,7 +31,7 @@ struct ContentView: View {
 			}
 		} detail: {
 			if let selectedAction = selectedAction {
-				ActionDetailView(action: selectedAction)
+				DetailView(action: selectedAction)
 					.toolbar {
 						ToolbarItem(placement: .destructiveAction) {
 							Button("Delete", systemImage: "trash") {
@@ -40,10 +40,14 @@ struct ContentView: View {
 						}
 					}
 			} else {
-				Text("Select Action")
-					.foregroundColor(.gray)
+				ContentUnavailableView(
+					"AutoMotion Studio",
+					systemImage: "rectangle.and.text.magnifyingglass",
+					description: Text("Select an Action in the sidebar oder add a new Action from the \(Image(systemName: "plus")) menu.")
+				)
 			}
 		}
+		.navigationTitle("")
 		.onDeleteCommand {
 			deleteSelectedAction()
 		}

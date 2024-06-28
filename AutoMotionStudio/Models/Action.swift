@@ -17,9 +17,7 @@ class Action: Identifiable {
 	@Attribute(.unique) var id: UUID = UUID()
 	var type: ActionType
 	var mouseCoordinates: Point = Point(x: 0, y: 0)
-	var humanizedMouseMovement: Bool = true
-	/// Easing means ramping up the movement smoothly in the beginning, and ramping it down towards the end.
-	var easing: CGFloat = 300
+	var mouseEasing: MouseEasing = MouseEasing.cubic(factor: 300)
 	var delay: TimeInterval = 0.5
 	var listIndex: Int = 0
 	
@@ -56,16 +54,18 @@ class Action: Identifiable {
 
 extension Action {
 	private func mouseMove() {
-		if humanizedMouseMovement {
-			humanizedMouseAction(eventType: .mouseMoved, mouseButton: .left)
-		} else {
-			// mouse move
-			CGEvent(
-				mouseEventSource: CGEventSource(stateID: CGEventSourceStateID.hidSystemState),
-				mouseType: .mouseMoved,
-				mouseCursorPosition: mouseCoordinates.cgPoint,
-				mouseButton: .left
-			)?.post(tap: CGEventTapLocation.cghidEventTap)
+		switch mouseEasing {
+			case .none:
+				// mouse move
+				CGEvent(
+					mouseEventSource: CGEventSource(stateID: CGEventSourceStateID.hidSystemState),
+					mouseType: .mouseMoved,
+					mouseCursorPosition: mouseCoordinates.cgPoint,
+					mouseButton: .left
+				)?.post(tap: CGEventTapLocation.cghidEventTap)
+				
+			case .cubic(let factor):
+				easingMouseAction(easingFactor: factor, eventType: .mouseMoved, mouseButton: .left)
 		}
 	}
 	
@@ -107,7 +107,9 @@ extension Action {
 	
 	private func mouseDragEnd() {
 		// drag
-		humanizedMouseAction(eventType: .leftMouseDragged, mouseButton: .left)
+		if case .cubic(let factor) = mouseEasing {
+			easingMouseAction(easingFactor: factor, eventType: .leftMouseDragged, mouseButton: .left)
+		}
 		
 		// mouse up
 		CGEvent(
@@ -120,11 +122,11 @@ extension Action {
 }
 
 extension Action {
-	private func humanizedMouseAction(eventType: CGEventType, mouseButton: CGMouseButton) {
+	private func easingMouseAction(easingFactor: CGFloat, eventType: CGEventType, mouseButton: CGMouseButton) {
 		let from = AppState.shared.cgMouseLocation
 		
 		let distance = from.distance(to: mouseCoordinates.cgPoint)
-		let steps = Int(distance * CGFloat(easing) / 100) + 1;
+		let steps = Int(distance * CGFloat(easingFactor) / 100) + 1;
 		let xDiff = mouseCoordinates.x - from.x
 		let yDiff = mouseCoordinates.y - from.y
 		let stepSize = 1.0 / CGFloat(steps)

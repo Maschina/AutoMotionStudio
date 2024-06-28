@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ActionListElement: View {
+struct ListElement: View {
 	@Bindable var action: Action
 	
 	var delay: Duration {
@@ -20,13 +20,15 @@ struct ActionListElement: View {
 			Text(action.type.description)
 			
 			HStack {
-				if action.humanizedMouseMovement {
-					Label("\(action.easing, format: .number.precision(.fractionLength(0)))", systemImage: "figure.walk.diamond")
+				if let factor = action.mouseEasing.cubicFactor {
+					Label("\(factor, format: .number.precision(.fractionLength(0)))", systemImage: "figure.walk.motion")
+						.contentTransition(.numericText())
 						.help("Humanized easing factor")
 				}
 				
 				if action.delay != 0 {
 					Label("\(delay, format: .time(pattern: .minuteSecond(padMinuteToLength: 2, fractionalSecondsLength: 2, roundFractionalSeconds: .toNearestOrEven)))", systemImage: "timer")
+						.contentTransition(.numericText())
 						.help("Trigger Delay")
 				}
 			}
@@ -39,6 +41,6 @@ struct ActionListElement: View {
 #Preview {
 	let action = Action(type: .linearMove)
 	action.delay = 2.5
-	return ActionListElement(action: action)
+	return ListElement(action: action)
 		.padding()
 }

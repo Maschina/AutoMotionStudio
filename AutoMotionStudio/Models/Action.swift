@@ -131,18 +131,23 @@ extension Action {
 		let yDiff = mouseCoordinates.y - from.y
 		let stepSize = 1.0 / CGFloat(steps)
 		
-		for i in 0...steps {
-			let factor = (stepSize * CGFloat(i)).cubicEaseOut()
-			let stepPoint = CGPoint(x: from.x + (factor * xDiff), y: from.y + (factor * yDiff))
-			
-			CGEvent(
-				mouseEventSource: CGEventSource(stateID: CGEventSourceStateID.hidSystemState),
-				mouseType: eventType,
-				mouseCursorPosition: stepPoint,
-				mouseButton: mouseButton
-			)?.post(tap: CGEventTapLocation.cghidEventTap)
-			
-			usleep(useconds_t(Int.random(in: 200..<300)))
+		do {
+			for i in 0...steps {
+				let factor = (stepSize * CGFloat(i)).cubicEaseOut()
+				let stepPoint = CGPoint(x: from.x + (factor * xDiff), y: from.y + (factor * yDiff))
+				
+				CGEvent(
+					mouseEventSource: CGEventSource(stateID: CGEventSourceStateID.hidSystemState),
+					mouseType: eventType,
+					mouseCursorPosition: stepPoint,
+					mouseButton: mouseButton
+				)?.post(tap: CGEventTapLocation.cghidEventTap)
+				
+				try Task.checkCancellation()
+				usleep(useconds_t(Int.random(in: 200..<300)))
+			}
+		} catch {
+			print("easingMouseAction cancelled")
 		}
 	}
 }

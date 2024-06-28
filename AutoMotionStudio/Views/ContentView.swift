@@ -42,8 +42,8 @@ struct ContentView: View {
 			} else {
 				ContentUnavailableView(
 					"AutoMotion Studio",
-					systemImage: "rectangle.and.text.magnifyingglass",
-					description: Text("Select an Action in the sidebar oder add a new Action from the \(Image(systemName: "plus")) menu.")
+					systemImage: "computermouse",
+					description: Text("Select an Action in the sidebar or add a new Action from the \(Image(systemName: "plus")) menu.")
 				)
 			}
 		}

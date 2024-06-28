@@ -6,34 +6,48 @@
 //
 
 import Foundation
+import SwiftData
+import KeyboardShortcuts
 
-struct ActionRuntime {
-	private(set) var actions: Actions = .init()
-	var isExecuting: Bool = false
+@Observable
+class ActionRuntime {
+	private(set) var isExecuting: Bool = false
 	
 	private var executionTask: Task<Void, any Error>?
 	
-	mutating func execute(with newActions: Actions) async {
-		actions = newActions
-		
-		print("Executing actions…")
-		
-		cancelActions()
-		isExecuting = true
-		
-		for action in actions {
-			try? Task.checkCancellation()
-			try? await Task.sleep(milliseconds: Int(action.delay * 1000))
-			action.execute()
+	init() {
+		Task { [weak self] in
+			for await event in KeyboardShortcuts.events(for: .stopActionExecution) where event == .keyUp {
+				self?.cancelActions()
+			}
 		}
-		
-		isExecuting = false
-		
-		print("Completed run")
 	}
 	
-	mutating private func cancelActions() {
+	func execute(_ actions: Actions) {
+		print("Executing \(actions.count) actions…")
+		
+		self.executionTask?.cancel()
+		isExecuting = true
+		
+		self.executionTask = Task { [actions, weak self] in
+			let startTime = CFAbsoluteTimeGetCurrent()
+
+			for action in actions {
+				try Task.checkCancellation()
+				try await Task.sleep(milliseconds: Int(action.delay * 1000))
+				action.execute()
+			}
+			
+			self?.isExecuting = false
+			
+			let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+			print("Completed execution in \(timeElapsed) seconds.")
+		}
+	}
+	
+	func cancelActions() {
 		self.executionTask?.cancel()
 		self.isExecuting = false
+		print("Cancelled execution.")
 	}
 }

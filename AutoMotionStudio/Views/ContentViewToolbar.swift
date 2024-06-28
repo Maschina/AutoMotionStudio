@@ -7,26 +7,39 @@
 
 import SwiftUI
 import SwiftData
+import KeyboardShortcuts
 
 struct ContentViewToolbar: ToolbarContent {
-	@Environment(\.modelContext) var modelContext
-	@Query(sort: \Action.listIndex) var actions: [Action]
-	
+	@Environment(\.modelContext) private var modelContext
 	@State private var runtime = ActionRuntime()
-	@State private var runtimeTask: Task<Void, Never>? = nil
 	
+	@Query(sort: \Action.listIndex) private var actions: [Action]
+	
+	@MainActor
+	var shortcutDescriptionStopActionExecution: String? {
+		guard let shortcut = KeyboardShortcuts.getShortcut(for: .stopActionExecution) else {
+			return nil
+		}
+		return shortcut.description
+	}
+	
+	@MainActor
 	var body: some ToolbarContent {
-		ToolbarItem(placement: .navigation) {
-			if !runtime.isExecuting {
+		if !runtime.isExecuting {
+			ToolbarItem(placement: .navigation) {
 				Button("Run", systemImage: "play.fill") {
-					runtimeTask = Task {
-						await runtime.execute(with: actions)
-					}
+					runtime.execute(actions)
 				}
-			} else {
+			}
+		} else {
+			ToolbarItemGroup(placement: .navigation) {
 				Button("Stop", systemImage: "stop.fill") {
-					runtimeTask?.cancel()
-					runtime.isExecuting = false
+					runtime.cancelActions()
+				}
+				
+				if let shortcutDescriptionStopActionExecution {
+					Text("Press \(shortcutDescriptionStopActionExecution) to stop execution")
+						.font(.footnote)
 				}
 			}
 		}

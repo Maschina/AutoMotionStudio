@@ -13,7 +13,7 @@ struct SettingsView: View {
 		Form {
 			Section("Hotkeys") {
 				KeyboardShortcuts.Recorder("Get Current Mouse Coordinates", name: .getCurrentMouseCoordinates)
-				KeyboardShortcuts.Recorder("Stop Action Execution", name: .stopRun)
+				KeyboardShortcuts.Recorder("Stop Action Execution", name: .stopActionExecution)
 			}
 		}
 		.formStyle(.grouped)

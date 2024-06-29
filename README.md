@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="Assets/icon_256x256@2x@2x.png" alt="App Icon">
+	<img height=150 src="Assets/icon_256x256@2x@2x.png" alt="App Icon">
 	<br>
 </div>
 

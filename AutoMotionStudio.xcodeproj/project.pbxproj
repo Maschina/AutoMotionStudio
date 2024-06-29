@@ -28,10 +28,11 @@
 		667BD2CA2C2E9E5200E9F016 /* MouseEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2C92C2E9E5200E9F016 /* MouseEasing.swift */; };
 		667BD2CC2C2EC31800E9F016 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CB2C2EC31800E9F016 /* SettingsView.swift */; };
 		667BD2CE2C30AC0F00E9F016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */; };
+		667BD2D02C30AFF500E9F016 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 667BD2CF2C30AF0800E9F016 /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		667BD26F2C2C9DC500E9F016 /* AutoMotionStudio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoMotionStudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		667BD26F2C2C9DC500E9F016 /* AutoMotion Studio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AutoMotion Studio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		667BD2722C2C9DC500E9F016 /* AutoMotionStudioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMotionStudioApp.swift; sourceTree = "<group>"; };
 		667BD2742C2C9DC500E9F016 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		667BD2762C2C9DC700E9F016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,6 +55,7 @@
 		667BD2C92C2E9E5200E9F016 /* MouseEasing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseEasing.swift; sourceTree = "<group>"; };
 		667BD2CB2C2EC31800E9F016 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		667BD2CF2C30AF0800E9F016 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +81,7 @@
 		667BD2702C2C9DC500E9F016 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				667BD26F2C2C9DC500E9F016 /* AutoMotionStudio.app */,
+				667BD26F2C2C9DC500E9F016 /* AutoMotion Studio.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				667BD2972C2D4E2300E9F016 /* Info.plist */,
+				667BD2CF2C30AF0800E9F016 /* Config.xcconfig */,
 				667BD2722C2C9DC500E9F016 /* AutoMotionStudioApp.swift */,
 				667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */,
 				667BD2762C2C9DC700E9F016 /* Assets.xcassets */,
@@ -181,7 +184,7 @@
 				667BD28F2C2CB90A00E9F016 /* KeyboardShortcuts */,
 			);
 			productName = AutoMotionStudio;
-			productReference = 667BD26F2C2C9DC500E9F016 /* AutoMotionStudio.app */;
+			productReference = 667BD26F2C2C9DC500E9F016 /* AutoMotion Studio.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				667BD27A2C2C9DC700E9F016 /* Preview Assets.xcassets in Resources */,
+				667BD2D02C30AFF500E9F016 /* Config.xcconfig in Resources */,
 				667BD2772C2C9DC700E9F016 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,6 +267,7 @@
 /* Begin XCBuildConfiguration section */
 		667BD27C2C2C9DC700E9F016 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 667BD2CF2C30AF0800E9F016 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -326,6 +331,7 @@
 		};
 		667BD27D2C2C9DC700E9F016 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 667BD2CF2C30AF0800E9F016 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -394,17 +400,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutoMotionStudio/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "AutoMotion Studio";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = maschinamaxima.AutoMotionStudio;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -425,17 +426,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutoMotionStudio/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "AutoMotion Studio";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = maschinamaxima.AutoMotionStudio;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};

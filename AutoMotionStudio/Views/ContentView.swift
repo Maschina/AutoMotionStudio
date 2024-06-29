@@ -25,7 +25,7 @@ struct ContentView: View {
 				.onMove(perform: onMove)
 				.onDelete(perform: onDelete)
 			}
-			.frame(minWidth: 180, idealWidth: 200)
+			.frame(minWidth: 190, idealWidth: 200)
 			.toolbar {
 				ContentViewToolbar()
 			}

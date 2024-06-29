@@ -31,6 +31,7 @@ struct AutoMotionStudioApp: App {
             ContentView()
 				.environment(appState)
         }
+		.defaultSize(width: 700, height: 550)
 		.modelContainer(sharedModelContainer)
 		
 		Settings {

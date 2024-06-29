@@ -11,6 +11,7 @@ import SwiftData
 @main
 struct AutoMotionStudioApp: App {
 	@State private var appState = AppState.shared
+	@NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 	
 	var sharedModelContainer: ModelContainer = {
 		let schema = Schema([

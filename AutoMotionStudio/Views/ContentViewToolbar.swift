@@ -26,10 +26,14 @@ struct ContentViewToolbar: ToolbarContent {
 	@MainActor
 	var body: some ToolbarContent {
 		if !runtime.isExecuting {
-			ToolbarItem(placement: .navigation) {
+			ToolbarItemGroup(placement: .navigation) {
 				Button("Run", systemImage: "play.fill") {
 					runtime.execute(actions)
 				}
+				
+//				Button("Export", systemImage: "square.and.arrow.up") {
+//					
+//				}
 			}
 		} else {
 			ToolbarItemGroup(placement: .navigation) {
@@ -57,6 +61,7 @@ struct ContentViewToolbar: ToolbarContent {
 				Label("Add Action", systemImage: "plus")
 			}
 			.menuIndicator(.hidden)
+			.disabled(runtime.isExecuting)
 		}
 	}
 }

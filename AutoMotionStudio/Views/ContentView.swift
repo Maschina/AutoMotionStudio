@@ -40,11 +40,17 @@ struct ContentView: View {
 						}
 					}
 			} else {
-				ContentUnavailableView(
-					"AutoMotion Studio",
-					systemImage: "computermouse",
-					description: Text("Select an Action in the sidebar or add a new Action from the \(Image(systemName: "plus")) menu.")
-				)
+				VStack(spacing: 25) {
+					Text("AutoMotion Studio")
+						.font(.largeTitle)
+						.fontWeight(.semibold)
+					
+					Text("Select an Action in the sidebar or add a new Action from the \(Image(systemName: "plus")) menu.")
+						
+				}
+				.multilineTextAlignment(.center)
+				.foregroundStyle(Color.secondary)
+				.padding(.horizontal, 30)
 			}
 		}
 		.navigationTitle("")

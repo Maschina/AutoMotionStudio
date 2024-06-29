@@ -27,6 +27,7 @@
 		667BD2C82C2E207900E9F016 /* ActionRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2C72C2E207900E9F016 /* ActionRuntime.swift */; };
 		667BD2CA2C2E9E5200E9F016 /* MouseEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2C92C2E9E5200E9F016 /* MouseEasing.swift */; };
 		667BD2CC2C2EC31800E9F016 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CB2C2EC31800E9F016 /* SettingsView.swift */; };
+		667BD2CE2C30AC0F00E9F016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		667BD2C72C2E207900E9F016 /* ActionRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRuntime.swift; sourceTree = "<group>"; };
 		667BD2C92C2E9E5200E9F016 /* MouseEasing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseEasing.swift; sourceTree = "<group>"; };
 		667BD2CB2C2EC31800E9F016 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			children = (
 				667BD2972C2D4E2300E9F016 /* Info.plist */,
 				667BD2722C2C9DC500E9F016 /* AutoMotionStudioApp.swift */,
+				667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */,
 				667BD2762C2C9DC700E9F016 /* Assets.xcassets */,
 				667BD27B2C2C9DC700E9F016 /* AutoMotionStudio.entitlements */,
 				667BD2952C2CCEC900E9F016 /* Views */,
@@ -246,6 +249,7 @@
 				667BD29E2C2D73E600E9F016 /* CGPoint+.swift in Sources */,
 				667BD2A72C2D8C6A00E9F016 /* Task+.swift in Sources */,
 				667BD28B2C2CA3DA00E9F016 /* DetailView.swift in Sources */,
+				667BD2CE2C30AC0F00E9F016 /* AppDelegate.swift in Sources */,
 				667BD2862C2CA35A00E9F016 /* Action.swift in Sources */,
 				667BD2CA2C2E9E5200E9F016 /* MouseEasing.swift in Sources */,
 				667BD2A92C2E094F00E9F016 /* Point.swift in Sources */,

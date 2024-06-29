@@ -75,7 +75,8 @@ struct DetailView: View {
 						.foregroundStyle(Color.secondary)
 						.font(.footnote)
 					SettingsLink()
-						.controlSize(.small)
+						.buttonStyle(.link)
+						.font(.footnote)
 				}
 			}
 		}

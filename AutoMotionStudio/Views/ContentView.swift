@@ -12,11 +12,12 @@ import KeyboardShortcuts
 struct ContentView: View {
 	@Environment(\.modelContext) var modelContext
 	@Query(sort: \Action.listIndex, animation: .default) var actions: [Action]
-	@State private var selectedAction: Action?
+	@State private var selectedActions: Set<Action> = .init()
 	
     var body: some View {
 		NavigationSplitView {
-			List(selection: $selectedAction) {
+			// sidebar
+			List(selection: $selectedActions) {
 				ForEach(actions) { action in
 					ListElement(action: action)
 						.padding(.vertical, 3)
@@ -30,16 +31,30 @@ struct ContentView: View {
 				ContentViewToolbar()
 			}
 		} detail: {
-			if let selectedAction = selectedAction {
+			if selectedActions.count == 1, let selectedAction = selectedActions.first {
+				// single selection details
 				DetailView(action: selectedAction)
 					.toolbar {
-						ToolbarItem(placement: .destructiveAction) {
-							Button("Delete", systemImage: "trash") {
-								deleteSelectedAction()
-							}
-						}
+						deleteSelectionToolbar
 					}
+			} else if selectedActions.count > 1 {
+				// multiple selections
+				ZStack {
+					ForEach(Array(selectedActions).reversed(), id: \.self) { selectedAction in
+						let randomRotation = Double.random(in: -3.5...3.5)
+						DetailView(action: selectedAction)
+							.disabled(true)
+							.clipShape(RoundedRectangle(cornerRadius: 15.0))
+							.shadow(radius: 2)
+							.padding(25)
+							.rotationEffect(.degrees(randomRotation))
+					}
+				}
+				.toolbar {
+					deleteSelectionToolbar
+				}
 			} else {
+				// no selection
 				VStack(spacing: 25) {
 					Text("AutoMotion Studio")
 						.font(.largeTitle)
@@ -59,7 +74,9 @@ struct ContentView: View {
 		}
 		.task {
 			for await event in KeyboardShortcuts.events(for: .getCurrentMouseCoordinates) where event == .keyUp {
-				self.selectedAction?.setCurrentMouseCoordinates()
+				for selectedAction in selectedActions {
+					selectedAction.setCurrentMouseCoordinates()
+				}
 			}
 		}
     }
@@ -81,13 +98,25 @@ struct ContentView: View {
 	}
 	
 	private func deleteSelectedAction() {
-		if let selectedAction {
+		for selectedAction in selectedActions {
 			modelContext.delete(selectedAction)
-			self.selectedAction = nil
+			self.selectedActions.remove(selectedAction)
+		}
+	}
+	
+	var deleteSelectionToolbar: some ToolbarContent {
+		ToolbarItem(placement: .destructiveAction) {
+			Button("Delete", systemImage: "trash") {
+				deleteSelectedAction()
+			}
 		}
 	}
 }
 
 #Preview {
-    ContentView()
+	let config = ModelConfiguration(isStoredInMemoryOnly: true)
+	let container = try! ModelContainer(for: Action.self, configurations: config)
+	
+    return ContentView()
+		.modelContainer(container)
 }

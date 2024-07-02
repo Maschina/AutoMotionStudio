@@ -58,8 +58,14 @@ class Action: Identifiable, Codable {
 	/// - Parameters:
 	///   - type: Defines the type of what to do
 	///   - listIndex: List index in the sidebar view
-	static func new(type: ActionType, listIndex: Int = 0) -> Action {
-		Action(type: type, listIndex: listIndex)
+	static func new(
+		type: ActionType,
+		listIndex: Int = 0
+	) -> Action {
+		Action(
+			type: type,
+			listIndex: listIndex
+		)
 	}
 
 	// MARK: Codable requirements

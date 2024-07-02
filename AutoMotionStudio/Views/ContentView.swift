@@ -67,7 +67,6 @@ struct ContentView: View {
 						.fontWeight(.semibold)
 					
 					Text("Select an Action in the sidebar or add a new Action from the \(Image(systemName: "plus")) menu.")
-						
 				}
 				.multilineTextAlignment(.center)
 				.foregroundStyle(Color.secondary)
@@ -95,8 +94,10 @@ struct ContentView: View {
 				}
 			}
 		}
-    }
-	
+	}
+}
+
+extension ContentView {
 	private func onMove(indices: IndexSet, newOffset: Int) {
 		var s = actions
 		s.move(fromOffsets: indices, toOffset: newOffset)

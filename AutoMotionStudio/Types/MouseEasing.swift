@@ -7,8 +7,11 @@
 
 import Foundation
 
+/// Defines the move dynamics of the traveling mouse cursor
 enum MouseEasing: Hashable, Identifiable, Codable {
+	/// Directly jump to the target mouse coordinates
 	case none
+	/// Apply a cubic acceleration and deceleration curve with a smoothing factor. The higher the factor, the slower the mouse will move.
 	case cubic(factor: CGFloat)
 	
 	var id: Self {
@@ -17,6 +20,7 @@ enum MouseEasing: Hashable, Identifiable, Codable {
 }
 
 extension MouseEasing {
+	/// If true, mouse movements will have a certain mouse dynamics.
 	var isOn: Bool {
 		switch self {
 			case .none:
@@ -30,6 +34,7 @@ extension MouseEasing {
 // MARK: Cubic factor
 
 extension MouseEasing {
+	/// Returns the easing factor if cubic mouse easing is chosen
 	var cubicFactor: CGFloat? {
 		switch self {
 			case .cubic(let factor):
@@ -39,13 +44,17 @@ extension MouseEasing {
 		}
 	}
 	
+	/// Returns the default easing factor for cubic mouse easing
 	static var cubicDefault: MouseEasing {
 		MouseEasing.cubic(factor: 300)
 	}
 	
+	/// Maximum reasonable easing factor for cubic mouse easing
 	static var cubicUpperBound: CGFloat = 2500
+	/// Minimum reasonable easing factor for cubic mouse easing
 	static var cubicLowerBound: CGFloat = 50
 	
+	/// Localized semantic description of the given mouse easing factor (e.g. "Slow", "Medium", etc)
 	var cubicSemanticDescription: String {
 		switch self {
 			case .cubic(let factor):

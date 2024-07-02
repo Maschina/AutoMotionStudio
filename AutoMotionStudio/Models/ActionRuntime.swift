@@ -9,8 +9,10 @@ import Foundation
 import SwiftData
 import KeyboardShortcuts
 
+/// Model to execute actions in the respective order
 @Observable
 class ActionRuntime {
+	/// Indicates if action runtime is running
 	private(set) var isExecuting: Bool = false
 	
 	private var executionTask: Task<Void, any Error>?
@@ -23,6 +25,8 @@ class ActionRuntime {
 		}
 	}
 	
+	/// Start execution of the given actions
+	/// - Parameter actions: List actions to be executed
 	func execute(_ actions: Actions) {
 		print("Executing \(actions.count) actions…")
 		
@@ -45,6 +49,7 @@ class ActionRuntime {
 		}
 	}
 	
+	/// Immediately stop the current execution of the previously given action list
 	func cancelActions() {
 		self.executionTask?.cancel()
 		self.isExecuting = false

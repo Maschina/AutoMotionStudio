@@ -9,23 +9,35 @@ import SwiftUI
 import SwiftData
 import KeyboardShortcuts
 
+/// Default toolbar content
 struct ContentViewToolbar: ToolbarContent {
 	@Environment(\.modelContext) private var modelContext
-	@State private var runtime = ActionRuntime()
-	
+	/// List of actions from persistent data source
 	@Query(sort: \Action.listIndex) private var actions: [Action]
-	
-	@MainActor
-	var shortcutDescriptionStopActionExecution: String? {
-		guard let shortcut = KeyboardShortcuts.getShortcut(for: .stopActionExecution) else {
-			return nil
-		}
-		return shortcut.description
-	}
+	/// Model to run all actions
+	@State private var runtime = ActionRuntime()
 	
 	@MainActor
 	var body: some ToolbarContent {
+		// toolbar item to add new action
+		ToolbarItemGroup(placement: .primaryAction) {
+			Spacer(minLength: 0)
+			Menu {
+				Button(insertAction: .linearMove, modelContext: modelContext)
+				Divider()
+				Button(insertAction: .primaryClick, modelContext: modelContext)
+				Button(insertAction: .secondaryClick, modelContext: modelContext)
+				Button(insertAction: .dragStart, modelContext: modelContext)
+				Button(insertAction: .dragEnd, modelContext: modelContext)
+			} label: {
+				Label("Add Action", systemImage: "plus")
+			}
+			.menuIndicator(.hidden)
+			.disabled(runtime.isExecuting)
+		}
+		
 		if !runtime.isExecuting {
+			// default list of toolbar items
 			ToolbarItemGroup(placement: .navigation) {
 				Button("Run", systemImage: "play.fill") {
 					runtime.execute(actions)
@@ -36,40 +48,33 @@ struct ContentViewToolbar: ToolbarContent {
 //				}
 			}
 		} else {
+			// list of toolbar items during execution of ActionRuntime
 			ToolbarItemGroup(placement: .navigation) {
 				Button("Stop", systemImage: "stop.fill") {
 					runtime.cancelActions()
 				}
 				
-				if let shortcutDescriptionStopActionExecution {
-					Text("Press \(shortcutDescriptionStopActionExecution) to stop execution")
+				if let shortcutDescription = KeyboardShortcuts.getShortcut(for: .stopActionExecution)?.description {
+					Text("Press \(shortcutDescription) to stop execution")
 						.font(.footnote)
 				}
 			}
-		}
-		
-		ToolbarItemGroup(placement: .primaryAction) {
-			Spacer(minLength: 0)
-			Menu {
-				Button(actionType: .linearMove, modelContext: modelContext)
-				Divider()
-				Button(actionType: .primaryClick, modelContext: modelContext)
-				Button(actionType: .secondaryClick, modelContext: modelContext)
-				Button(actionType: .dragStart, modelContext: modelContext)
-				Button(actionType: .dragEnd, modelContext: modelContext)
-			} label: {
-				Label("Add Action", systemImage: "plus")
-			}
-			.menuIndicator(.hidden)
-			.disabled(runtime.isExecuting)
 		}
 	}
 }
 
 extension Button where Label == Text {
-	init(actionType: ActionType, modelContext: ModelContext) {
-		self.init(actionType.description) {
-			let action = Action(type: actionType)
+	/// Button init to directly add a new action into the model context
+	init(insertAction: ActionType, modelContext: ModelContext) {
+		self.init(insertAction.description) {
+			let actions = try? modelContext.fetch(FetchDescriptor<Action>())
+			let listIndexMax = actions?.map(\.listIndex).max()
+			
+			let listIndex = if let listIndexMax { listIndexMax + 1 } else { 0 }
+			let action = Action.new(
+				type: insertAction,
+				listIndex: listIndex
+			)
 			modelContext.insert(action)
 		}
 	}

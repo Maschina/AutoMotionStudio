@@ -8,6 +8,7 @@
 import SwiftUI
 import KeyboardShortcuts
 
+/// Settings window view
 struct SettingsView: View {
     var body: some View {
 		Form {

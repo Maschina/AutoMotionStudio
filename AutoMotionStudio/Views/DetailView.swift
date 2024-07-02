@@ -8,6 +8,7 @@
 import SwiftUI
 import KeyboardShortcuts
 
+/// Action detail view that is shown when list element in the sidebar is being selected
 struct DetailView: View {
 	@Bindable var action: Action
 	
@@ -142,7 +143,7 @@ struct DetailView: View {
 }
 
 #Preview {
-	let action = Action(type: .linearMove)
+	let action = Action.new(type: .linearMove)
 	return DetailView(action: action)
 		.frame(width: 400, height: 800)
 }

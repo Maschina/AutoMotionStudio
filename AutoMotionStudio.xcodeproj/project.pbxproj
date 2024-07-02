@@ -16,7 +16,7 @@
 		667BD28B2C2CA3DA00E9F016 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD28A2C2CA3DA00E9F016 /* DetailView.swift */; };
 		667BD2902C2CB90A00E9F016 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 667BD28F2C2CB90A00E9F016 /* KeyboardShortcuts */; };
 		667BD2922C2CB94200E9F016 /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2912C2CB94200E9F016 /* KeyboardShortcuts.swift */; };
-		667BD2942C2CBD4300E9F016 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2932C2CBD4300E9F016 /* AppState.swift */; };
+		667BD2942C2CBD4300E9F016 /* PasteboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2932C2CBD4300E9F016 /* PasteboardModel.swift */; };
 		667BD29A2C2D547000E9F016 /* ContentViewToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */; };
 		667BD29E2C2D73E600E9F016 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD29D2C2D73E600E9F016 /* CGPoint+.swift */; };
 		667BD2A02C2D74D600E9F016 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD29F2C2D74D600E9F016 /* CGFloat+.swift */; };
@@ -29,6 +29,12 @@
 		667BD2CC2C2EC31800E9F016 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CB2C2EC31800E9F016 /* SettingsView.swift */; };
 		667BD2CE2C30AC0F00E9F016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */; };
 		667BD2D02C30AFF500E9F016 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 667BD2CF2C30AF0800E9F016 /* Config.xcconfig */; };
+		66809FAE2C33015B00CD6758 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66809FAD2C33015B00CD6758 /* Container.swift */; };
+		66809FB02C3345C300CD6758 /* Array+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66809FAF2C3345C300CD6758 /* Array+Action.swift */; };
+		66809FB42C33DDDC00CD6758 /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66809FB32C33DDDC00CD6758 /* Collection+.swift */; };
+		66809FB62C33DF7D00CD6758 /* MouseLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66809FB52C33DF7D00CD6758 /* MouseLocations.swift */; };
+		66809FB82C33E25900CD6758 /* Notification+PasteboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66809FB72C33E25900CD6758 /* Notification+PasteboardModel.swift */; };
+		66809FBB2C33E2C500CD6758 /* NotificationCenter+TypeSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66809FBA2C33E2C500CD6758 /* NotificationCenter+TypeSafe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +48,7 @@
 		667BD2852C2CA35A00E9F016 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		667BD28A2C2CA3DA00E9F016 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		667BD2912C2CB94200E9F016 /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
-		667BD2932C2CBD4300E9F016 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		667BD2932C2CBD4300E9F016 /* PasteboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardModel.swift; sourceTree = "<group>"; };
 		667BD2972C2D4E2300E9F016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewToolbar.swift; sourceTree = "<group>"; };
 		667BD29D2C2D73E600E9F016 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
@@ -56,6 +62,12 @@
 		667BD2CB2C2EC31800E9F016 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		667BD2CF2C30AF0800E9F016 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		66809FAD2C33015B00CD6758 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		66809FAF2C3345C300CD6758 /* Array+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Action.swift"; sourceTree = "<group>"; };
+		66809FB32C33DDDC00CD6758 /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
+		66809FB52C33DF7D00CD6758 /* MouseLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseLocations.swift; sourceTree = "<group>"; };
+		66809FB72C33E25900CD6758 /* Notification+PasteboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+PasteboardModel.swift"; sourceTree = "<group>"; };
+		66809FBA2C33E2C500CD6758 /* NotificationCenter+TypeSafe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+TypeSafe.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,11 +107,13 @@
 				667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */,
 				667BD2762C2C9DC700E9F016 /* Assets.xcassets */,
 				667BD27B2C2C9DC700E9F016 /* AutoMotionStudio.entitlements */,
+				66809FAC2C33015000CD6758 /* Data */,
 				667BD2952C2CCEC900E9F016 /* Views */,
 				667BD2872C2CA37200E9F016 /* Models */,
 				667BD2982C2D4E8C00E9F016 /* Types */,
 				667BD2A52C2D8C5F00E9F016 /* Extensions */,
 				667BD2962C2CCEEC00E9F016 /* Globals */,
+				66809FB92C33E2B700CD6758 /* Services */,
 				667BD2782C2C9DC700E9F016 /* Preview Content */,
 			);
 			path = AutoMotionStudio;
@@ -116,6 +130,8 @@
 		667BD2872C2CA37200E9F016 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				667BD2932C2CBD4300E9F016 /* PasteboardModel.swift */,
+				66809FB72C33E25900CD6758 /* Notification+PasteboardModel.swift */,
 				667BD2C72C2E207900E9F016 /* ActionRuntime.swift */,
 				667BD2852C2CA35A00E9F016 /* Action.swift */,
 			);
@@ -137,8 +153,8 @@
 		667BD2962C2CCEEC00E9F016 /* Globals */ = {
 			isa = PBXGroup;
 			children = (
-				667BD2932C2CBD4300E9F016 /* AppState.swift */,
 				667BD2912C2CB94200E9F016 /* KeyboardShortcuts.swift */,
+				66809FB52C33DF7D00CD6758 /* MouseLocations.swift */,
 			);
 			path = Globals;
 			sourceTree = "<group>";
@@ -160,8 +176,26 @@
 				667BD29D2C2D73E600E9F016 /* CGPoint+.swift */,
 				667BD29F2C2D74D600E9F016 /* CGFloat+.swift */,
 				667BD2A62C2D8C6A00E9F016 /* Task+.swift */,
+				66809FAF2C3345C300CD6758 /* Array+Action.swift */,
+				66809FB32C33DDDC00CD6758 /* Collection+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		66809FAC2C33015000CD6758 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				66809FAD2C33015B00CD6758 /* Container.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		66809FB92C33E2B700CD6758 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				66809FBA2C33E2C500CD6758 /* NotificationCenter+TypeSafe.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,17 +280,23 @@
 				667BD2752C2C9DC500E9F016 /* ContentView.swift in Sources */,
 				667BD2732C2C9DC500E9F016 /* AutoMotionStudioApp.swift in Sources */,
 				667BD2922C2CB94200E9F016 /* KeyboardShortcuts.swift in Sources */,
+				66809FB42C33DDDC00CD6758 /* Collection+.swift in Sources */,
 				667BD2CC2C2EC31800E9F016 /* SettingsView.swift in Sources */,
 				667BD2A02C2D74D600E9F016 /* CGFloat+.swift in Sources */,
-				667BD2942C2CBD4300E9F016 /* AppState.swift in Sources */,
+				66809FBB2C33E2C500CD6758 /* NotificationCenter+TypeSafe.swift in Sources */,
+				667BD2942C2CBD4300E9F016 /* PasteboardModel.swift in Sources */,
+				66809FAE2C33015B00CD6758 /* Container.swift in Sources */,
+				66809FB02C3345C300CD6758 /* Array+Action.swift in Sources */,
 				667BD2A22C2D7A7600E9F016 /* ListElement.swift in Sources */,
 				667BD29E2C2D73E600E9F016 /* CGPoint+.swift in Sources */,
 				667BD2A72C2D8C6A00E9F016 /* Task+.swift in Sources */,
+				66809FB62C33DF7D00CD6758 /* MouseLocations.swift in Sources */,
 				667BD28B2C2CA3DA00E9F016 /* DetailView.swift in Sources */,
 				667BD2CE2C30AC0F00E9F016 /* AppDelegate.swift in Sources */,
 				667BD2862C2CA35A00E9F016 /* Action.swift in Sources */,
 				667BD2CA2C2E9E5200E9F016 /* MouseEasing.swift in Sources */,
 				667BD2A92C2E094F00E9F016 /* Point.swift in Sources */,
+				66809FB82C33E25900CD6758 /* Notification+PasteboardModel.swift in Sources */,
 				667BD2A42C2D80D600E9F016 /* PropertyWrappers.swift in Sources */,
 				667BD2842C2CA34200E9F016 /* ActionType.swift in Sources */,
 			);
@@ -400,6 +440,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutoMotionStudio/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "AutoMotion Studio";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -426,6 +468,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutoMotionStudio/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "AutoMotion Studio";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -10,30 +10,51 @@ import SwiftData
 
 @main
 struct AutoMotionStudioApp: App {
-	@State private var appState = AppState.shared
+	/// An object that manages the app's lifecycle events.
 	@NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+	/// A shared model container for persistent data.
+	@State private var sharedModelContainer: ModelContainer
+	/// A model for managing the pasteboard actions.
+	@State private var pasteboardModel: PasteboardModel
+	/// A set of actions currently selected by the user. Is being notified by `TypeSafeNotification.selectionsChanged` notification.
+	@State private var selectedActions: Set<Action> = []
 	
-	var sharedModelContainer: ModelContainer = {
-		let schema = Schema([
-			Action.self,
-		])
-		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-		
-		do {
-			return try ModelContainer(for: schema, configurations: [modelConfiguration])
-		} catch {
-			fatalError("Could not create ModelContainer: \(error)")
-		}
-	}()
+	internal init() {
+		let persistence = Container.persistent
+		self._sharedModelContainer = State(initialValue: persistence)
+		self._pasteboardModel = State(initialValue: PasteboardModel(persistence: persistence))
+	}
 	
     var body: some Scene {
         WindowGroup {
             ContentView()
-				.environment(appState)
+				.environment(pasteboardModel)
+				.onReceive(for: .selectionsChanged) { newValue in
+					selectedActions = newValue
+				}
         }
 		.defaultSize(width: 700, height: 550)
+		.commands {
+			// replacing copy/paste with custom actions since copyable in NavigationSplitView does not work currently
+			CommandGroup(replacing: .pasteboard) {
+				// copy action
+				Button("Copy") {
+					pasteboardModel.copy(selectedActions)
+				}
+				.keyboardShortcut("c")
+				.disabled(selectedActions.isEmpty)
+				
+				// paste action
+				Button("Paste") {
+					pasteboardModel.paste(behind: selectedActions)
+				}
+				.keyboardShortcut("v")
+				.disabled(selectedActions.isEmpty || !pasteboardModel.hasCopiedActions)
+			}
+		}
 		.modelContainer(sharedModelContainer)
 		
+		// app's settings window
 		Settings {
 			SettingsView()
 		}

@@ -9,14 +9,18 @@ import SwiftUI
 import SwiftData
 import KeyboardShortcuts
 
+/// Main view containing the navigation split view
 struct ContentView: View {
 	@Environment(\.modelContext) var modelContext
-	@Query(sort: \Action.listIndex, animation: .default) var actions: [Action]
-	@State private var selectedActions: Set<Action> = .init()
+	/// List of actions from persistent data source
+	@Query(sort: \Action.listIndex) var actions: [Action]
+	/// Multiple selections the user can choose from the sidebar
+	@State private var selectedActions: Set<Action> = []
 	
     var body: some View {
 		NavigationSplitView {
-			// sidebar
+			// Navigation View sidebar
+			
 			List(selection: $selectedActions) {
 				ForEach(actions) { action in
 					ListElement(action: action)
@@ -31,6 +35,8 @@ struct ContentView: View {
 				ContentViewToolbar()
 			}
 		} detail: {
+			// Navigation View details
+			
 			if selectedActions.count == 1, let selectedAction = selectedActions.first {
 				// single selection details
 				DetailView(action: selectedAction)
@@ -40,7 +46,7 @@ struct ContentView: View {
 			} else if selectedActions.count > 1 {
 				// multiple selections
 				ZStack {
-					ForEach(Array(selectedActions).reversed(), id: \.self) { selectedAction in
+					ForEach(Array(selectedActions).reversed().dropLast(max(selectedActions.count - 5, 0)), id: \.self) { selectedAction in
 						let randomRotation = Double.random(in: -3.5...3.5)
 						DetailView(action: selectedAction)
 							.disabled(true)
@@ -69,9 +75,15 @@ struct ContentView: View {
 			}
 		}
 		.navigationTitle("")
+		// perform actions when user presses ⌫ key
 		.onDeleteCommand {
 			deleteSelectedAction()
 		}
+		// send notification that selections has been changed
+		.onChange(of: selectedActions) {
+			NotificationCenter.default.post(.selectionsChanged, data: selectedActions)
+		}
+		// keyboard shortcut observer for setting current mouse coordinates
 		.task {
 			for await event in KeyboardShortcuts.events(for: .getCurrentMouseCoordinates) where event == .keyUp {
 				for selectedAction in selectedActions {
@@ -82,26 +94,37 @@ struct ContentView: View {
     }
 	
 	private func onMove(indices: IndexSet, newOffset: Int) {
-		var s = actions.sorted(by: { $0.listIndex < $1.listIndex })
+		var s = actions
 		s.move(fromOffsets: indices, toOffset: newOffset)
-		for (index, item) in s.enumerated() {
-			item.listIndex = index
-		}
-		try? modelContext.save()
+		// make sure to re-order the list indicies
+		s.reorder(keyPath: \.listIndex)
 	}
 	
 	private func onDelete(indices: IndexSet) {
 		for i in indices {
 			let action = actions[i]
 			modelContext.delete(action)
+			selectedActions.remove(action)
 		}
+		// save before moving ahead with other modifications
+		try? modelContext.save()
+		
+		// make sure to re-order the list indicies
+		var s = actions
+		s.reorder(keyPath: \.listIndex)
 	}
 	
 	private func deleteSelectedAction() {
 		for selectedAction in selectedActions {
 			modelContext.delete(selectedAction)
-			self.selectedActions.remove(selectedAction)
+			selectedActions.remove(selectedAction)
 		}
+		// save before moving ahead with other modifications
+		try? modelContext.save()
+		
+		// make sure to re-order the list indicies
+		var s = actions
+		s.reorder(keyPath: \.listIndex)
 	}
 	
 	var deleteSelectionToolbar: some ToolbarContent {

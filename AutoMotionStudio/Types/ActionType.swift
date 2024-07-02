@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+/// Defines the type of action to do
 enum ActionType: Identifiable, CaseIterable, Codable {
 	case linearMove
 	case primaryClick
@@ -21,6 +22,7 @@ enum ActionType: Identifiable, CaseIterable, Codable {
 }
 
 extension ActionType: CustomStringConvertible {
+	/// Gives a localized description of the action type
 	var description: String {
 		switch self {
 			case .linearMove:

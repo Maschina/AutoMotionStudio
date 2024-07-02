@@ -50,22 +50,30 @@ extension PasteboardModel {
 	
 	/// Paste the previously copied actions behind the currently selected location.
 	func paste(behind selectedActions: Set<Action>) {
+		self.paste(self.copiedActions, behind: selectedActions)
+	}
+	
+	private func paste(_ newActions: Set<Action>, behind selectedActions: Set<Action>) {
 		// paste behind the location of the last selected item
 		let listIndexMax = Array(selectedActions).map(\.listIndex).max()
 		var listIndex = if let listIndexMax { listIndexMax + 1 } else { 0 }
 		
 		// shift up list indexes of all existing following items
-		let offset = copiedActions.count
-		for action in actions.filter({ $0.listIndex >= listIndex }) {
+		let offset = newActions.count
+		for action in self.actions.filter({ $0.listIndex >= listIndex }) {
 			action.listIndex += offset
 		}
 		
 		// insert copied actions into the context
-		for action in copiedActions.sorted(by: \.listIndex, <) {
+		for action in newActions.sorted(by: \.listIndex, <) {
 			let duplicate = action.duplicate
 			duplicate.listIndex = listIndex
 			modelContext.insert(duplicate)
 			listIndex += 1
 		}
+	}
+	
+	func duplicate(_ actions: Set<Action>) {
+		self.paste(actions, behind: actions)
 	}
 }

@@ -11,9 +11,9 @@ import KeyboardShortcuts
 
 /// Main view containing the navigation split view
 struct ContentView: View {
-	@Environment(\.modelContext) var modelContext
+	@Environment(\.modelContext) private var modelContext
 	/// List of actions from persistent data source
-	@Query(sort: \Action.listIndex) var actions: [Action]
+	@Query(sort: \Action.listIndex) private var actions: [Action]
 	/// Multiple selections the user can choose from the sidebar
 	@State private var selectedActions: Set<Action> = []
 	
@@ -78,6 +78,10 @@ struct ContentView: View {
 		// perform actions when user presses ⌫ key
 		.onDeleteCommand {
 			deleteSelectedAction()
+		}
+		// receive notification that selections has been changed
+		.onReceive(for: .selectionsChanged) { newValue in
+			selectedActions = newValue
 		}
 		// send notification that selections has been changed
 		.onChange(of: selectedActions) {

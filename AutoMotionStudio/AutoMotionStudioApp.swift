@@ -29,28 +29,21 @@ struct AutoMotionStudioApp: App {
         WindowGroup {
             ContentView()
 				.environment(pasteboardModel)
+				// receive notification that selections has been changed
 				.onReceive(for: .selectionsChanged) { newValue in
 					selectedActions = newValue
+				}
+				// send notification that selections has been changed
+				.onChange(of: selectedActions) {
+					NotificationCenter.default.post(.selectionsChanged, data: selectedActions)
 				}
         }
 		.defaultSize(width: 700, height: 550)
 		.commands {
-			// replacing copy/paste with custom actions since copyable in NavigationSplitView does not work currently
-			CommandGroup(replacing: .pasteboard) {
-				// copy action
-				Button("Copy") {
-					pasteboardModel.copy(selectedActions)
-				}
-				.keyboardShortcut("c")
-				.disabled(selectedActions.isEmpty)
-				
-				// paste action
-				Button("Paste") {
-					pasteboardModel.paste(behind: selectedActions)
-				}
-				.keyboardShortcut("v")
-				.disabled(selectedActions.isEmpty || !pasteboardModel.hasCopiedActions)
-			}
+			AppCommands(
+				pasteboardModel: pasteboardModel,
+				selectedActions: $selectedActions
+			)
 		}
 		.modelContainer(sharedModelContainer)
 		

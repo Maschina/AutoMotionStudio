@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		663689EB2C3450B200C9DCCB /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663689EA2C3450B200C9DCCB /* AppCommands.swift */; };
 		667BD2732C2C9DC500E9F016 /* AutoMotionStudioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2722C2C9DC500E9F016 /* AutoMotionStudioApp.swift */; };
 		667BD2752C2C9DC500E9F016 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2742C2C9DC500E9F016 /* ContentView.swift */; };
 		667BD2772C2C9DC700E9F016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 667BD2762C2C9DC700E9F016 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		663689EA2C3450B200C9DCCB /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		667BD26F2C2C9DC500E9F016 /* AutoMotion Studio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AutoMotion Studio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		667BD2722C2C9DC500E9F016 /* AutoMotionStudioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMotionStudioApp.swift; sourceTree = "<group>"; };
 		667BD2742C2C9DC500E9F016 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				667BD2972C2D4E2300E9F016 /* Info.plist */,
 				667BD2CF2C30AF0800E9F016 /* Config.xcconfig */,
 				667BD2722C2C9DC500E9F016 /* AutoMotionStudioApp.swift */,
+				663689EA2C3450B200C9DCCB /* AppCommands.swift */,
 				667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */,
 				667BD2762C2C9DC700E9F016 /* Assets.xcassets */,
 				667BD27B2C2C9DC700E9F016 /* AutoMotionStudio.entitlements */,
@@ -286,6 +289,7 @@
 				66809FBB2C33E2C500CD6758 /* NotificationCenter+TypeSafe.swift in Sources */,
 				667BD2942C2CBD4300E9F016 /* PasteboardModel.swift in Sources */,
 				66809FAE2C33015B00CD6758 /* Container.swift in Sources */,
+				663689EB2C3450B200C9DCCB /* AppCommands.swift in Sources */,
 				66809FB02C3345C300CD6758 /* Array+Action.swift in Sources */,
 				667BD2A22C2D7A7600E9F016 /* ListElement.swift in Sources */,
 				667BD29E2C2D73E600E9F016 /* CGPoint+.swift in Sources */,

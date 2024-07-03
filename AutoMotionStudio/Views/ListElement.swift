@@ -22,11 +22,7 @@ struct ListElement: View {
 	
     var body: some View {
 		VStack(alignment: .leading, spacing: 5) {
-			#if DEBUG
-			Text("\(type.description) (\(listIndex))")
-			#else
 			Text(type.description)
-			#endif
 			
 			HStack {
 				// indicate mouse easing speed

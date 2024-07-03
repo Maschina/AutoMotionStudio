@@ -23,33 +23,6 @@ struct AppCommands: Commands {
 //	private let undoChange = NotificationCenter.default.publisher(for: .NSUndoManagerDidUndoChange)
 	
 	var body: some Commands {
-		// undo/redo manager
-		CommandGroup(replacing: .undoRedo) {
-			Button("Undo") {
-				modelContext.undoManager?.undo()
-				canUndo = modelContext.undoManager?.canUndo == true
-			}
-			.keyboardShortcut("z", modifiers: .command)
-			.disabled(!canUndo)
-			.onReceive(undoObserver) { _ in
-				// updating `canUndo` if undo group has been closed
-				canUndo = modelContext.undoManager?.canUndo == true
-//				if let undoManager = modelContext.undoManager {
-//					let undostack = object_getIvar(undoManager, class_getInstanceVariable(UndoManager.self, "_undoStack")!);
-//					print(undostack.debugDescription)
-//				}
-			}
-//			.onReceive(undoChange) { _ in
-//				if let undoManager = modelContext.undoManager {
-//					if #available(macOS 14.4, *) {
-//						print("Undo count: \(undoManager.undoCount)")
-//					}
-//					let undostack = object_getIvar(undoManager, class_getInstanceVariable(UndoManager.self, "_undoStack")!);
-//					print(undostack.debugDescription)
-//				}
-//			}
-		}
-		
 		// replacing copy/paste with custom actions since copyable in NavigationSplitView does not work currently
 		CommandGroup(replacing: .pasteboard) {
 			// copy action

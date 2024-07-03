@@ -16,13 +16,13 @@ typealias Actions = [Action]
 
 /// Model to store an action. An action is a set of action type definition (e.g. mouse click), target mouse coordinates and dynamics and a delay to wait before executing this action.
 @Model
-class Action: Identifiable, Codable {
+final class Action: Identifiable, Codable {
 	/// ID of the action to identify its uniqueness
 	@Attribute(.unique) var id: UUID = UUID()
 	/// Defines the type of what to do
 	var type: ActionType
 	/// Travel the mouse cursor to these coordinates before doing the action as defined in Action `type`
-	var mouseCoordinates: Point = Point(x: 0, y: 0)
+	var mouseCoordinates: Point = Point(x: 0, y: 0) 
 	/// Defines the move dynamics of the traveling mouse cursor
 	var mouseEasing: MouseEasing = MouseEasing.cubic(factor: 300)
 	/// Delay in seconds before executing the action

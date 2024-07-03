@@ -11,7 +11,7 @@ import SwiftData
 struct Container {
 	/// Persistence container to the Model Container
 	@MainActor
-	static var persistent: ModelContainer {
+	static var persistent: ModelContainer = {
 		let schema = Schema([
 			Action.self,
 		])
@@ -19,10 +19,9 @@ struct Container {
 		
 		do {
 			let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
-			container.mainContext.undoManager = UndoManager()
 			return container
 		} catch {
 			fatalError("Could not create ModelContainer: \(error)")
 		}
-	}
+	}()
 }

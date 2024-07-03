@@ -12,6 +12,7 @@ import KeyboardShortcuts
 /// Main view containing the navigation split view
 struct ContentView: View {
 	@Environment(\.modelContext) private var modelContext
+	@Environment(\.undoManager) var undoManager
 	/// List of actions from persistent data source
 	@Query(sort: \Action.listIndex) private var actions: [Action]
 	/// Multiple selections the user can choose from the sidebar
@@ -23,9 +24,14 @@ struct ContentView: View {
 			
 			List(selection: $selectedActions) {
 				ForEach(actions) { action in
-					ListElement(action: action)
-						.padding(.vertical, 3)
-						.tag(action)
+					ListElement(
+						type: action.type,
+						listIndex: action.listIndex,
+						mouseEasing: action.mouseEasing,
+						delay: action.delay
+					)
+					.padding(.vertical, 3)
+					.tag(action)
 				}
 				.onMove(perform: onMove)
 				.onDelete(perform: onDelete)
@@ -39,21 +45,31 @@ struct ContentView: View {
 			
 			if selectedActions.count == 1, let selectedAction = selectedActions.first {
 				// single selection details
-				DetailView(action: selectedAction)
-					.toolbar {
-						deleteSelectionToolbar
-					}
+				DetailView(
+					type: Bindable(selectedAction).type,
+					mouseCoordinates: Bindable(selectedAction).mouseCoordinates,
+					mouseEasing: Bindable(selectedAction).mouseEasing,
+					delay: Bindable(selectedAction).delay
+				)
+				.toolbar {
+					deleteSelectionToolbar
+				}
 			} else if selectedActions.count > 1 {
 				// multiple selections
 				ZStack {
 					ForEach(Array(selectedActions).reversed().dropLast(max(selectedActions.count - 5, 0)), id: \.self) { selectedAction in
 						let randomRotation = Double.random(in: -3.5...3.5)
-						DetailView(action: selectedAction)
-							.disabled(true)
-							.clipShape(RoundedRectangle(cornerRadius: 15.0))
-							.shadow(radius: 2)
-							.padding(25)
-							.rotationEffect(.degrees(randomRotation))
+						DetailView(
+							type: Bindable(selectedAction).type,
+							mouseCoordinates: Bindable(selectedAction).mouseCoordinates,
+							mouseEasing: Bindable(selectedAction).mouseEasing,
+							delay: Bindable(selectedAction).delay
+						)
+						.disabled(true)
+						.clipShape(RoundedRectangle(cornerRadius: 15.0))
+						.shadow(radius: 2)
+						.padding(25)
+						.rotationEffect(.degrees(randomRotation))
 					}
 				}
 				.toolbar {
@@ -85,6 +101,10 @@ struct ContentView: View {
 		// send notification that selections has been changed
 		.onChange(of: selectedActions) {
 			NotificationCenter.default.post(.selectionsChanged, data: selectedActions)
+		}
+		// instantiating UndoManager
+		.onChange(of: undoManager, initial: true) {
+			modelContext.undoManager = undoManager
 		}
 		// keyboard shortcut observer for setting current mouse coordinates
 		.task {

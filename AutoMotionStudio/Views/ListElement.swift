@@ -9,32 +9,35 @@ import SwiftUI
 
 /// List element view for the sidebar
 struct ListElement: View {
-	@Bindable var action: Action
+	let type: ActionType
+	let listIndex: Int
+	let mouseEasing: MouseEasing
+	let delay: TimeInterval
 	
 	/// Delay of the action before being executed
-	var delay: Duration {
-		let modf = modf(action.delay)
+	var duration: Duration {
+		let modf = modf(delay)
 		return Duration(secondsComponent: Int64(modf.0), attosecondsComponent: Int64(modf.1 * 1000) * 1_000_000_000_000_000)
 	}
 	
     var body: some View {
 		VStack(alignment: .leading, spacing: 5) {
 			#if DEBUG
-			Text("\(action.type.description) (\(action.listIndex))")
+			Text("\(type.description) (\(listIndex))")
 			#else
-			Text(action.type.description)
+			Text(type.description)
 			#endif
 			
 			HStack {
 				// indicate mouse easing speed
-				if action.mouseEasing.cubicFactor != nil {
-					Label("\(action.mouseEasing.cubicSemanticDescription)", systemImage: "computermouse")
+				if mouseEasing.cubicFactor != nil {
+					Label("\(mouseEasing.cubicSemanticDescription)", systemImage: "computermouse")
 						.help("Mouse Easing Speed")
 				}
 				
 				// indicate delay of the action
-				if action.delay != 0 {
-					Label("\(delay, format: .time(pattern: .minuteSecond(padMinuteToLength: 2, fractionalSecondsLength: 2, roundFractionalSeconds: .toNearestOrEven)))", systemImage: "timer")
+				if delay != 0 {
+					Label("\(duration, format: .time(pattern: .minuteSecond(padMinuteToLength: 2, fractionalSecondsLength: 2, roundFractionalSeconds: .toNearestOrEven)))", systemImage: "timer")
 						.contentTransition(.numericText())
 						.help("Trigger Delay")
 				}
@@ -48,6 +51,6 @@ struct ListElement: View {
 #Preview {
 	let action = Action.new(type: .linearMove)
 	action.delay = 2.5
-	return ListElement(action: action)
+	return ListElement(type: action.type, listIndex: action.listIndex, mouseEasing: action.mouseEasing, delay: action.delay)
 		.padding()
 }

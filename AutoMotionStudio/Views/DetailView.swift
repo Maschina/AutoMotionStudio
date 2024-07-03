@@ -10,12 +10,15 @@ import KeyboardShortcuts
 
 /// Action detail view that is shown when list element in the sidebar is being selected
 struct DetailView: View {
-	@Bindable var action: Action
+	@Binding var type: ActionType
+	@Binding var mouseCoordinates: Point
+	@Binding var mouseEasing: MouseEasing
+	@Binding var delay: TimeInterval
 	
 	var body: some View {
 		Form {
 			actionTypeView
-			MouseCoordinatesView(action: action)
+			MouseCoordinatesView(mouseCoordinates: $mouseCoordinates)
 			triggerDelayView
 			mouseDynamicsView
 		}
@@ -24,7 +27,7 @@ struct DetailView: View {
 	
 	var actionTypeView: some View {
 		Section {
-			Picker("Action Type", selection: $action.type) {
+			Picker("Action Type", selection: $type) {
 				ForEach(ActionType.allCases) { type in
 					Text(type.description)
 						.tag(type)
@@ -35,21 +38,21 @@ struct DetailView: View {
 	}
 	
 	struct MouseCoordinatesView: View {
-		@Bindable var action: Action
+		@Binding var mouseCoordinates: Point
 		
 		var xCoordinate: Binding<Double> {
 			Binding {
-				action.mouseCoordinates.x
+				mouseCoordinates.x
 			} set: { newValue in
-				action.mouseCoordinates.x = newValue
+				mouseCoordinates.x = newValue
 			}
 		}
 		
 		var yCoordinate: Binding<Double> {
 			Binding {
-				action.mouseCoordinates.y
+				mouseCoordinates.y
 			} set: { newValue in
-				action.mouseCoordinates.y = newValue
+				mouseCoordinates.y = newValue
 			}
 		}
 		
@@ -89,9 +92,9 @@ struct DetailView: View {
 			
 			HStack {
 				let isOnMouseEasing = Binding<Bool> {
-					action.mouseEasing.isOn
+					mouseEasing.isOn
 				} set: { newValue in
-					action.mouseEasing = newValue ? MouseEasing.cubicDefault : .none
+					mouseEasing = newValue ? MouseEasing.cubicDefault : .none
 				}
 
 				Toggle(isOn: isOnMouseEasing) {
@@ -101,13 +104,13 @@ struct DetailView: View {
 				}
 			}
 			
-			if action.mouseEasing.isOn {
+			if mouseEasing.isOn {
 				let mouseEasingFactor = Binding<CGFloat> {
-					let factor = action.mouseEasing.cubicFactor ?? 0.0
+					let factor = mouseEasing.cubicFactor ?? 0.0
 					return MouseEasing.cubicUpperBound - factor + MouseEasing.cubicLowerBound // inverse value
 				} set: {
 					let newValue = MouseEasing.cubicUpperBound - $0 + MouseEasing.cubicLowerBound // inverse value
-					action.mouseEasing = MouseEasing.cubic(factor: newValue)
+					mouseEasing = MouseEasing.cubic(factor: newValue)
 				}
 				
 				Slider(
@@ -126,13 +129,13 @@ struct DetailView: View {
 			HStack {
 				Text("Duration (in seconds)")
 				
-				TextField(value: $action.delay, format: .number.precision(.fractionLength(2))) {
+				TextField(value: $delay, format: .number.precision(.fractionLength(2))) {
 					ControlGroup {
-						Button(action: { action.delay -= 0.5 }, label: {
+						Button(action: { delay -= 0.5 }, label: {
 							Image(systemName: "minus")
 						})
 						
-						Button(action: { action.delay += 0.5 }, label: {
+						Button(action: { delay += 0.5 }, label: {
 							Image(systemName: "plus")
 						})
 					}
@@ -144,6 +147,6 @@ struct DetailView: View {
 
 #Preview {
 	let action = Action.new(type: .linearMove)
-	return DetailView(action: action)
+	return DetailView(type: .constant(action.type), mouseCoordinates: .constant(action.mouseCoordinates), mouseEasing: .constant(action.mouseEasing), delay: .constant(action.delay))
 		.frame(width: 400, height: 800)
 }

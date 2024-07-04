@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66219CC12C369AD600E06467 /* View+KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66219CC02C369AD600E06467 /* View+KeyboardShortcuts.swift */; };
 		663689EB2C3450B200C9DCCB /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663689EA2C3450B200C9DCCB /* AppCommands.swift */; };
 		667BD2732C2C9DC500E9F016 /* AutoMotionStudioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2722C2C9DC500E9F016 /* AutoMotionStudioApp.swift */; };
 		667BD2752C2C9DC500E9F016 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2742C2C9DC500E9F016 /* ContentView.swift */; };
@@ -25,7 +26,7 @@
 		667BD2A42C2D80D600E9F016 /* PropertyWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2A32C2D80D600E9F016 /* PropertyWrappers.swift */; };
 		667BD2A72C2D8C6A00E9F016 /* Task+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2A62C2D8C6A00E9F016 /* Task+.swift */; };
 		667BD2A92C2E094F00E9F016 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2A82C2E094F00E9F016 /* Point.swift */; };
-		667BD2C82C2E207900E9F016 /* ActionRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2C72C2E207900E9F016 /* ActionRuntime.swift */; };
+		667BD2C82C2E207900E9F016 /* SequenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2C72C2E207900E9F016 /* SequenceModel.swift */; };
 		667BD2CA2C2E9E5200E9F016 /* MouseEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2C92C2E9E5200E9F016 /* MouseEasing.swift */; };
 		667BD2CC2C2EC31800E9F016 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CB2C2EC31800E9F016 /* SettingsView.swift */; };
 		667BD2CE2C30AC0F00E9F016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		66219CC02C369AD600E06467 /* View+KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+KeyboardShortcuts.swift"; sourceTree = "<group>"; };
 		663689EA2C3450B200C9DCCB /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		667BD26F2C2C9DC500E9F016 /* AutoMotion Studio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AutoMotion Studio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		667BD2722C2C9DC500E9F016 /* AutoMotionStudioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMotionStudioApp.swift; sourceTree = "<group>"; };
@@ -59,7 +61,7 @@
 		667BD2A32C2D80D600E9F016 /* PropertyWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyWrappers.swift; sourceTree = "<group>"; };
 		667BD2A62C2D8C6A00E9F016 /* Task+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+.swift"; sourceTree = "<group>"; };
 		667BD2A82C2E094F00E9F016 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
-		667BD2C72C2E207900E9F016 /* ActionRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRuntime.swift; sourceTree = "<group>"; };
+		667BD2C72C2E207900E9F016 /* SequenceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceModel.swift; sourceTree = "<group>"; };
 		667BD2C92C2E9E5200E9F016 /* MouseEasing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseEasing.swift; sourceTree = "<group>"; };
 		667BD2CB2C2EC31800E9F016 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -135,7 +137,7 @@
 			children = (
 				667BD2932C2CBD4300E9F016 /* PasteboardModel.swift */,
 				66809FB72C33E25900CD6758 /* Notification+PasteboardModel.swift */,
-				667BD2C72C2E207900E9F016 /* ActionRuntime.swift */,
+				667BD2C72C2E207900E9F016 /* SequenceModel.swift */,
 				667BD2852C2CA35A00E9F016 /* Action.swift */,
 			);
 			path = Models;
@@ -181,6 +183,7 @@
 				667BD2A62C2D8C6A00E9F016 /* Task+.swift */,
 				66809FAF2C3345C300CD6758 /* Array+Action.swift */,
 				66809FB32C33DDDC00CD6758 /* Collection+.swift */,
+				66219CC02C369AD600E06467 /* View+KeyboardShortcuts.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -278,7 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				667BD2C82C2E207900E9F016 /* ActionRuntime.swift in Sources */,
+				667BD2C82C2E207900E9F016 /* SequenceModel.swift in Sources */,
 				667BD29A2C2D547000E9F016 /* ContentViewToolbar.swift in Sources */,
 				667BD2752C2C9DC500E9F016 /* ContentView.swift in Sources */,
 				667BD2732C2C9DC500E9F016 /* AutoMotionStudioApp.swift in Sources */,
@@ -297,6 +300,7 @@
 				66809FB62C33DF7D00CD6758 /* MouseLocations.swift in Sources */,
 				667BD28B2C2CA3DA00E9F016 /* DetailView.swift in Sources */,
 				667BD2CE2C30AC0F00E9F016 /* AppDelegate.swift in Sources */,
+				66219CC12C369AD600E06467 /* View+KeyboardShortcuts.swift in Sources */,
 				667BD2862C2CA35A00E9F016 /* Action.swift in Sources */,
 				667BD2CA2C2E9E5200E9F016 /* MouseEasing.swift in Sources */,
 				667BD2A92C2E094F00E9F016 /* Point.swift in Sources */,

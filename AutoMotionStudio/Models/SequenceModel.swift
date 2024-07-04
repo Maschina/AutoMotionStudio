@@ -11,16 +11,19 @@ import KeyboardShortcuts
 
 /// Model to execute actions in the respective order
 @Observable
-class ActionRuntime {
+class SequenceModel {
+	/// ActionRuntime singleton
+	static var shared: SequenceModel = .init()
+	
 	/// Indicates if action runtime is running
 	private(set) var isExecuting: Bool = false
 	
 	private var executionTask: Task<Void, any Error>?
 	
-	init() {
+	private init() {
 		Task { [weak self] in
 			for await event in KeyboardShortcuts.events(for: .stopActionExecution) where event == .keyUp {
-				self?.cancelActions()
+				self?.stop()
 			}
 		}
 	}
@@ -50,7 +53,7 @@ class ActionRuntime {
 	}
 	
 	/// Immediately stop the current execution of the previously given action list
-	func cancelActions() {
+	func stop() {
 		self.executionTask?.cancel()
 		self.isExecuting = false
 		print("Cancelled execution.")

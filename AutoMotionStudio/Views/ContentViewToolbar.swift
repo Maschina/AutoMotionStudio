@@ -15,7 +15,7 @@ struct ContentViewToolbar: ToolbarContent {
 	/// List of actions from persistent data source
 	@Query(sort: \Action.listIndex) private var actions: [Action]
 	/// Model to run all actions
-	@State private var runtime = ActionRuntime()
+	@State private var sequence = SequenceModel.shared
 	
 	@MainActor
 	var body: some ToolbarContent {
@@ -33,25 +33,21 @@ struct ContentViewToolbar: ToolbarContent {
 				Label("Add Action", systemImage: "plus")
 			}
 			.menuIndicator(.hidden)
-			.disabled(runtime.isExecuting)
+			.disabled(sequence.isExecuting)
 		}
 		
-		if !runtime.isExecuting {
+		if !sequence.isExecuting {
 			// default list of toolbar items
 			ToolbarItemGroup(placement: .navigation) {
 				Button("Run", systemImage: "play.fill") {
-					runtime.execute(actions)
+					sequence.execute(actions)
 				}
-				
-//				Button("Export", systemImage: "square.and.arrow.up") {
-//					
-//				}
 			}
 		} else {
 			// list of toolbar items during execution of ActionRuntime
 			ToolbarItemGroup(placement: .navigation) {
 				Button("Stop", systemImage: "stop.fill") {
-					runtime.cancelActions()
+					sequence.stop()
 				}
 				
 				if let shortcutDescription = KeyboardShortcuts.getShortcut(for: .stopActionExecution)?.description {

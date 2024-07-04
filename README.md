@@ -14,11 +14,11 @@ AutoMotion Studio is a macOS application designed to automate mouse movements an
 - [x] Mouse Movement: Move the mouse cursor to specified coordinates.
 - [x] Mouse Click: Perform mouse clicks at specified coordinates.
 - [x] Mouse Drag: Drag the mouse cursor to specified coordinates.
-- [ ] Wait Action: Pause the execution for a specified duration.
+- [x] Wait Action: Delay the execution for a specified duration.
 
 ## Screenshots
 
- <!-- Replace with actual screenshot paths -->
+![Screenshot](Assets/Screenshot1.png)
 
 ## Contributing
 

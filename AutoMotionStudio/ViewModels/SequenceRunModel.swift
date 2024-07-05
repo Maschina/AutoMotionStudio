@@ -6,14 +6,14 @@
 //
 
 import Foundation
-import SwiftData
 import KeyboardShortcuts
+import Cocoa
 
 /// Model to execute actions in the respective order
 @Observable
-class SequenceModel {
+class SequenceRunModel {
 	/// ActionRuntime singleton
-	static var shared: SequenceModel = .init()
+	static var shared: SequenceRunModel = .init()
 	
 	/// Indicates if action runtime is running
 	private(set) var isExecuting: Bool = false
@@ -30,7 +30,7 @@ class SequenceModel {
 	
 	/// Start execution of the given actions
 	/// - Parameter actions: List actions to be executed
-	func execute(_ actions: Actions) {
+	func run(_ actions: [Action]) {
 		print("Executing \(actions.count) actions…")
 		
 		self.executionTask?.cancel()

@@ -17,7 +17,7 @@ struct AppCommands: Commands {
 	/// List of actions from persistent data source
 	@Query(sort: \Action.listIndex) private var actions: [Action]
 	/// Model to run all actions
-	@State private var sequence = SequenceModel.shared
+	@State private var sequence = SequenceRunModel.shared
 	
 	/// Indicating if there are any undo operations in the stack
 	@State private var canUndo: Bool = false
@@ -68,13 +68,13 @@ struct AppCommands: Commands {
 		
 		CommandMenu("Sequence") {
 			Button("Run All Actions") {
-				sequence.execute(actions)
+				sequence.run(actions)
 			}
 			.keyboardShortcut("r", modifiers: .command)
 			.disabled(sequence.isExecuting)
 			
 			Button("Run Selected Actions") {
-				sequence.execute(selectedActions.sorted(by: \.listIndex, <))
+				sequence.run(selectedActions.sorted(by: \.listIndex, <))
 			}
 			.keyboardShortcut("r", modifiers: [.command, .shift])
 			.disabled(selectedActions.isEmpty || sequence.isExecuting)

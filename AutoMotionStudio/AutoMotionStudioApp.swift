@@ -38,7 +38,9 @@ struct AutoMotionStudioApp: App {
 					NotificationCenter.default.post(.selectionsChanged, data: selectedActions)
 				}
         }
-		.defaultSize(width: 700, height: 550)
+		.windowStyle(.hiddenTitleBar)
+		.windowToolbarStyle(.unified)
+		.defaultSize(width: 800, height: 550)
 		.commands {
 			AppCommands(
 				pasteboardModel: pasteboardModel,

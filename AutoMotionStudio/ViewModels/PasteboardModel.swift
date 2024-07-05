@@ -29,7 +29,7 @@ extension PasteboardModel {
 
 extension PasteboardModel {
 	/// List of actions from persistent data source
-	private var actions: Actions {
+	private var actions: [Action] {
 		do {
 			return try modelContext.fetch(FetchDescriptor<Action>())
 		} catch {
@@ -66,7 +66,7 @@ extension PasteboardModel {
 		
 		// insert copied actions into the context
 		for action in newActions.sorted(by: \.listIndex, <) {
-			let duplicate = action.duplicate
+			let duplicate = action.duplicate()
 			duplicate.listIndex = listIndex
 			modelContext.insert(duplicate)
 			listIndex += 1

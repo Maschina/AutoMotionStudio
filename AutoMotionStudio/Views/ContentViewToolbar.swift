@@ -15,7 +15,7 @@ struct ContentViewToolbar: ToolbarContent {
 	/// List of actions from persistent data source
 	@Query(sort: \Action.listIndex) private var actions: [Action]
 	/// Model to run all actions
-	@State private var sequence = SequenceModel.shared
+	@State private var sequence = SequenceRunModel.shared
 	
 	@MainActor
 	var body: some ToolbarContent {
@@ -40,7 +40,7 @@ struct ContentViewToolbar: ToolbarContent {
 			// default list of toolbar items
 			ToolbarItemGroup(placement: .navigation) {
 				Button("Run", systemImage: "play.fill") {
-					sequence.execute(actions)
+					sequence.run(actions)
 				}
 			}
 		} else {
@@ -67,7 +67,7 @@ extension Button where Label == Text {
 			let listIndexMax = actions?.map(\.listIndex).max()
 			
 			let listIndex = if let listIndexMax { listIndexMax + 1 } else { 0 }
-			let action = Action.new(
+			let action = Action(
 				type: insertAction,
 				listIndex: listIndex
 			)

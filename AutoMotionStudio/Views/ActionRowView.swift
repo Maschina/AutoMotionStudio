@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// List element view for the sidebar
-struct ListElement: View {
+struct ActionRowView: View {
 	let type: ActionType
 	let listIndex: Int
 	let mouseEasing: MouseEasing
@@ -45,8 +45,8 @@ struct ListElement: View {
 }
 
 #Preview {
-	let action = Action.new(type: .linearMove)
+	let action = Action(type: .linearMove)
 	action.delay = 2.5
-	return ListElement(type: action.type, listIndex: action.listIndex, mouseEasing: action.mouseEasing, delay: action.delay)
+	return ActionRowView(type: action.type, listIndex: action.listIndex, mouseEasing: action.mouseEasing, delay: action.delay)
 		.padding()
 }

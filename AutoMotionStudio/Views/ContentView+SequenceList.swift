@@ -13,7 +13,9 @@ extension ContentView {
 	struct SequenceList: View {
 		@Binding var selectedSequence: Sequence?
 		
-		@State var searchText: String = ""
+		@State private var searchText: String = ""
+		
+		@State private var confirmDelete: Bool = false
 		
 		@Environment(\.undoManager) var undoManager
 		
@@ -41,7 +43,14 @@ extension ContentView {
 					}
 				}
 				.listStyle(.sidebar)
-				.focusedValue(\.delete, deleteSelectedSequence)
+				// Delete by confirmation
+				.focusedValue(\.delete, confirmDeleteSelectedSequence)
+				.confirmationDialog("Confirm Delete Sequence", isPresented: $confirmDelete, actions: {
+					Button("Delete", role: .destructive) {
+						deleteSelectedSequence()
+					}
+				})
+				// Fuzzy search sequence
 				.searchable(
 					text: $searchText,
 					placement: .sidebar,
@@ -70,6 +79,10 @@ extension ContentView.SequenceList {
 		modelContext.insert(sequence)
 		
 		selectedSequence = sequence
+	}
+	
+	private func confirmDeleteSelectedSequence() {
+		confirmDelete = true
 	}
 	
 	private func deleteSelectedSequence() {

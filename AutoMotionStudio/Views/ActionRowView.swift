@@ -45,7 +45,8 @@ struct ActionRowView: View {
 }
 
 #Preview {
-	let action = Action(type: .linearMove)
+	let sequence = Sequence(title: "Preview Sequence")
+	let action = Action(type: .linearMove, sequence: sequence)
 	action.delay = 2.5
 	return ActionRowView(type: action.type, listIndex: action.listIndex, mouseEasing: action.mouseEasing, delay: action.delay)
 		.padding()

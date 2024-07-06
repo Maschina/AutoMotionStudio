@@ -114,11 +114,11 @@
 		662FC85C2C3740C00028BCD7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				662FC8582C37373C0028BCD7 /* Sequence.V2.swift */,
+				662FC85F2C3745520028BCD7 /* Sequence+.swift */,
 				667BD2852C2CA35A00E9F016 /* Action.V1.swift */,
 				662FC8612C37459E0028BCD7 /* Action.V2.swift */,
 				662FC85D2C3743940028BCD7 /* Action+.swift */,
-				662FC8582C37373C0028BCD7 /* Sequence.V2.swift */,
-				662FC85F2C3745520028BCD7 /* Sequence+.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

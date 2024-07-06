@@ -70,16 +70,18 @@ extension ContentView {
 		}
 		
 		private func deleteSelectedActions() {
-			for selectedAction in selectedActions {
-				modelContext.delete(selectedAction)
-				selectedActions.remove(selectedAction)
+			withAnimation {
+				for selectedAction in selectedActions {
+					modelContext.delete(selectedAction)
+					selectedActions.remove(selectedAction)
+				}
+				// save before moving ahead with other modifications
+				try? modelContext.save()
+				
+				// make sure to re-order the list indicies
+				var s = actions
+				s.reorder(keyPath: \.listIndex)
 			}
-			// save before moving ahead with other modifications
-			try? modelContext.save()
-			
-			// make sure to re-order the list indicies
-			var s = actions
-			s.reorder(keyPath: \.listIndex)
 		}
 	}
 }

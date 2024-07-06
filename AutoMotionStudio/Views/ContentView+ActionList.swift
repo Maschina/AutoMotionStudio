@@ -21,23 +21,18 @@ extension ContentView {
 		@State private var sequenceRunner = SequenceRunModel.shared
 		
 		@Environment(\.modelContext) private var modelContext
-		@Query private var actions: [Action]
+		@Query(sort: \Action.listIndex, animation: .default) private var actions: [Action]
 		
-		init(selectedSequence: Sequence?, selectedActions: Binding<Set<Action>>) {
-			self.selectedSequence = selectedSequence
-			self._selectedActions = selectedActions
-			
-			let selectedSequenceId = selectedSequence?.id
-			let predicate = #Predicate<Action> {
-				$0.sequence?.id == selectedSequenceId
+		var filteredActions: [Action] {
+			actions.filter { action in
+				action.sequence == selectedSequence
 			}
-			self._actions = Query(filter: predicate, sort: \Action.listIndex, animation: .default)
 		}
 		
 		var body: some View {
-			if selectedSequence != nil {
+			if let selectedSequence {
 				List(selection: $selectedActions) {
-					ForEach(actions) { action in
+					ForEach(filteredActions) { action in
 						ActionRowView(
 							type: action.type,
 							listIndex: action.listIndex,
@@ -54,32 +49,36 @@ extension ContentView {
 				.toolbar {
 					ToolbarItem(placement: .confirmationAction) {
 						Menu {
-							Button(insertAction: .linearMove, sequence: selectedSequence, modelContext: modelContext)
+							Button(insertAction: .linearMove, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
 							Divider()
-							Button(insertAction: .primaryClick, sequence: selectedSequence, modelContext: modelContext)
-							Button(insertAction: .secondaryClick, sequence: selectedSequence, modelContext: modelContext)
-							Button(insertAction: .dragStart, sequence: selectedSequence, modelContext: modelContext)
-							Button(insertAction: .dragEnd, sequence: selectedSequence, modelContext: modelContext)
+							Button(insertAction: .primaryClick, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
+							Button(insertAction: .secondaryClick, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
+							Button(insertAction: .dragStart, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
+							Button(insertAction: .dragEnd, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
 						} label: {
 							Label("Add Action", systemImage: "plus")
 						}
 						.menuIndicator(.hidden)
 					}
 					
-					if !sequenceRunner.isExecuting {
-						ToolbarItem(placement: .primaryAction) {
-							Button("Run", systemImage: "play.fill") {
-								sequenceRunner.run(actions)
+					if !filteredActions.isEmpty {
+						if !sequenceRunner.isExecuting {
+							ToolbarItem(placement: .primaryAction) {
+								Button("Run", systemImage: "play.fill") {
+									sequenceRunner.run(actions)
+								}
+								// Avoid animation
+								.transaction { $0.animation = nil }
 							}
-						}
-					} else {
-						ToolbarItem(placement: .primaryAction) {
-							Button("Stop", systemImage: "stop.fill") {
-								sequenceRunner.stop()
-							}
-							.popoverTip(stopActionShortcutTip)
-							.task {
-								try? Tips.configure()
+						} else {
+							ToolbarItem(placement: .primaryAction) {
+								Button("Stop", systemImage: "stop.fill") {
+									sequenceRunner.stop()
+								}
+								.popoverTip(stopActionShortcutTip, arrowEdge: .trailing)
+								.task {
+									try? Tips.configure()
+								}
 							}
 						}
 					}

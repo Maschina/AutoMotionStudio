@@ -36,7 +36,7 @@ extension SchemaV2 {
 		///   - listIndex: List index in the sidebar view
 		init(
 			type: ActionType,
-			sequence: Sequence? = nil,
+			sequence: Sequence,
 			listIndex: Int = 0
 		) {
 			self.type = type
@@ -63,7 +63,7 @@ extension SchemaV2 {
 		// MARK: Codable requirements
 		
 		enum CodingKeys: CodingKey {
-			case id, type, mouseCoordinates, mouseEasing, delay, listIndex
+			case id, type, mouseCoordinates, mouseEasing, delay, listIndex, sequence
 		}
 		
 		required init(from decoder: Decoder) throws {
@@ -74,6 +74,7 @@ extension SchemaV2 {
 			mouseEasing = try container.decode(MouseEasing.self, forKey: .mouseEasing)
 			delay = try container.decode(TimeInterval.self, forKey: .delay)
 			listIndex = try container.decode(Int.self, forKey: .listIndex)
+			sequence = try container.decode(Sequence.self, forKey: .sequence)
 		}
 		
 		func encode(to encoder: Encoder) throws {
@@ -84,7 +85,10 @@ extension SchemaV2 {
 			try container.encode(mouseEasing, forKey: .mouseEasing)
 			try container.encode(delay, forKey: .delay)
 			try container.encode(listIndex, forKey: .listIndex)
+			try container.encode(sequence, forKey: .sequence)
 		}
+		
+		// MARK: Hashable
 		
 		static func == (lhs: Action, rhs: Action) -> Bool {
 			lhs.id == rhs.id

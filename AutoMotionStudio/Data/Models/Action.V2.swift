@@ -32,12 +32,15 @@ extension SchemaV2 {
 		/// Creates and returns a new action
 		/// - Parameters:
 		///   - type: Defines the type of what to do
+		///   - sequence: Related sequence this action belongs to
 		///   - listIndex: List index in the sidebar view
 		init(
 			type: ActionType,
+			sequence: Sequence? = nil,
 			listIndex: Int = 0
 		) {
 			self.type = type
+			self.sequence = sequence
 			self.listIndex = listIndex
 		}
 		
@@ -46,13 +49,15 @@ extension SchemaV2 {
 			mouseCoordinates: Point,
 			mouseEasing: MouseEasing,
 			delay: TimeInterval,
-			listIndex: Int
+			listIndex: Int,
+			sequence: Sequence?
 		) {
 			self.type = type
 			self.mouseCoordinates = mouseCoordinates
 			self.mouseEasing = mouseEasing
 			self.delay = delay
 			self.listIndex = listIndex
+			self.sequence = sequence
 		}
 		
 		// MARK: Codable requirements

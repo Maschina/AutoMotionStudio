@@ -13,6 +13,10 @@ extension ContentView {
 		/// Multiple selections the user can choose from the content list
 		@Binding var selectedActions: Set<Action>
 		
+		@Environment(\.modelContext) private var modelContext
+		/// List of actions from persistent data source
+		@Query(sort: \Action.listIndex) private var actions: [Action]
+		
 		var body: some View {
 			if selectedActions.count == 1, let selectedAction = selectedActions.first {
 				// single selection details
@@ -22,6 +26,13 @@ extension ContentView {
 					mouseEasing: Bindable(selectedAction).mouseEasing,
 					delay: Bindable(selectedAction).delay
 				)
+				.toolbar {
+					ToolbarItem(placement: .destructiveAction) {
+						Button("Delete", systemImage: "trash") {
+							deleteSelectedActions()
+						}
+					}
+				}
 			} else if selectedActions.count > 1 {
 				// multiple selections
 				ZStack {
@@ -40,6 +51,13 @@ extension ContentView {
 						.rotationEffect(.degrees(randomRotation))
 					}
 				}
+				.toolbar {
+					ToolbarItem(placement: .destructiveAction) {
+						Button("Delete", systemImage: "trash") {
+							deleteSelectedActions()
+						}
+					}
+				}
 			} else {
 				// no selection
 				Text("No Action Selected")
@@ -49,6 +67,19 @@ extension ContentView {
 					.foregroundStyle(Color.secondary)
 					.padding(.horizontal, 30)
 			}
+		}
+		
+		private func deleteSelectedActions() {
+			for selectedAction in selectedActions {
+				modelContext.delete(selectedAction)
+				selectedActions.remove(selectedAction)
+			}
+			// save before moving ahead with other modifications
+			try? modelContext.save()
+			
+			// make sure to re-order the list indicies
+			var s = actions
+			s.reorder(keyPath: \.listIndex)
 		}
 	}
 }

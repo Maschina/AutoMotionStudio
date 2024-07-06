@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SequenceRowView: View {
 	@Binding var title: String
-	let listIndex: Int
 	
     var body: some View {
 		VStack(alignment: .leading, spacing: 5) {
@@ -19,5 +18,5 @@ struct SequenceRowView: View {
 }
 
 #Preview {
-	SequenceRowView(title: .constant("Row Item"), listIndex: 1)
+	SequenceRowView(title: .constant("Row Item"))
 }

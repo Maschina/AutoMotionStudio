@@ -165,7 +165,8 @@ extension Action {
 			mouseCoordinates: self.mouseCoordinates,
 			mouseEasing: self.mouseEasing,
 			delay: self.delay,
-			listIndex: self.listIndex
+			listIndex: self.listIndex,
+			sequence: self.sequence
 		)
 	}
 }

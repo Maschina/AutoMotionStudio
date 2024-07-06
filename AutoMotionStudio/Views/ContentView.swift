@@ -20,6 +20,8 @@ struct ContentView: View {
 	/// Multiple selections the user can choose from the content list
 	@State private var selectedActions: Set<Action> = []
 	
+	@FocusedValue (\.delete) var delete
+	
     var body: some View {
 		NavigationSplitView {
 			SequenceList(
@@ -32,23 +34,13 @@ struct ContentView: View {
 				selectedActions: $selectedActions
 			)
 			.frame(minWidth: 190, idealWidth: 200)
-			.toolbar {
-				ContentViewToolbar()
-			}
 		} detail: {
 			Detail(
 				selectedActions: $selectedActions
 			)
-			.toolbar {
-				if !selectedActions.isEmpty {
-					deleteSelectedActionsToolbar
-				}
-			}
 		}
 		// perform actions when user presses ⌫ key
-		.onDeleteCommand {
-			deleteSelectedActions()
-		}
+		.onDeleteCommand(perform: delete)
 		// receive notification that selections has been changed
 		.onReceive(for: .selectionsChanged) { newValue in
 			selectedActions = newValue

@@ -45,10 +45,12 @@ extension ContentView {
 				.listStyle(.sidebar)
 				// Delete by confirmation
 				.focusedValue(\.delete, confirmDeleteSelectedSequence)
-				.confirmationDialog("Confirm Delete Sequence", isPresented: $confirmDelete, actions: {
-					Button("Delete", role: .destructive) {
+				.confirmationDialog("Delete Sequence?", isPresented: $confirmDelete, actions: {
+					Button("Confirm", role: .destructive) {
 						deleteSelectedSequence()
 					}
+				}, message: {
+					Text("Are you sure you want to delete \(selectedSequence?.title ?? "?")")
 				})
 				// Fuzzy search sequence
 				.searchable(

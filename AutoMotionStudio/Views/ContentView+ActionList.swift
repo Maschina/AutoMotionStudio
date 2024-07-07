@@ -21,18 +21,23 @@ extension ContentView {
 		@State private var sequenceRunner = SequenceRunModel.shared
 		
 		@Environment(\.modelContext) private var modelContext
-		@Query(sort: \Action.listIndex, animation: .default) private var actions: [Action]
+		@Query private var actions: [Action]
 		
-		var filteredActions: [Action] {
-			actions.filter { action in
-				action.sequence == selectedSequence
+		init(selectedSequence: Sequence?, selectedActions: Binding<Set<Action>>) {
+			self._selectedActions = selectedActions
+			self.selectedSequence = selectedSequence
+			
+			let selectedSequenceId = selectedSequence?.id
+			let predicate = #Predicate<Action> {
+				$0.sequence?.id == selectedSequenceId
 			}
+			self._actions = Query(filter: predicate, sort: \Action.listIndex, animation: .default)
 		}
 		
 		var body: some View {
 			if let selectedSequence {
 				List(selection: $selectedActions) {
-					ForEach(filteredActions) { action in
+					ForEach(actions) { action in
 						ActionRowView(
 							type: action.type,
 							listIndex: action.listIndex,
@@ -59,9 +64,10 @@ extension ContentView {
 							Label("Add Action", systemImage: "plus")
 						}
 						.menuIndicator(.hidden)
+						.disabled(sequenceRunner.isExecuting)
 					}
 					
-					if !filteredActions.isEmpty {
+					if !actions.isEmpty {
 						if !sequenceRunner.isExecuting {
 							ToolbarItem(placement: .primaryAction) {
 								Button("Run", systemImage: "play.fill") {

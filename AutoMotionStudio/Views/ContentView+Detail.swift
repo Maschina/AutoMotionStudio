@@ -17,6 +17,9 @@ extension ContentView {
 		/// List of actions from persistent data source
 		@Query(sort: \Action.listIndex) private var actions: [Action]
 		
+		let multiSelectionStapleAnimationMaxCount: Int = 5
+		let multiSelectionStapleAnimationRotations: [Double] = [-1.5, 0.25, 2.0, -1.75, 2.5]
+		
 		var body: some View {
 			if selectedActions.count == 1, let selectedAction = selectedActions.first {
 				// single selection details
@@ -36,8 +39,9 @@ extension ContentView {
 			} else if selectedActions.count > 1 {
 				// multiple selections
 				ZStack {
-					ForEach(Array(selectedActions).reversed().dropLast(max(selectedActions.count - 5, 0)), id: \.self) { selectedAction in
-						let randomRotation = Double.random(in: -3.5...3.5)
+					let items = selectedActions.sorted(by: \.listIndex, <).reversed().dropLast(max(selectedActions.count - multiSelectionStapleAnimationMaxCount, 0))
+					ForEach(Array(items.enumerated()), id: \.offset) { index, selectedAction in
+						let rotation = multiSelectionStapleAnimationRotations[index]
 						ActionDetailView(
 							type: Bindable(selectedAction).type,
 							mouseCoordinates: Bindable(selectedAction).mouseCoordinates,
@@ -48,7 +52,7 @@ extension ContentView {
 						.clipShape(RoundedRectangle(cornerRadius: 15.0))
 						.shadow(radius: 2)
 						.padding(25)
-						.rotationEffect(.degrees(randomRotation))
+						.rotationEffect(.degrees(rotation))
 					}
 				}
 				.toolbar {

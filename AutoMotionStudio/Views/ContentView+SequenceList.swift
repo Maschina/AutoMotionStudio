@@ -13,11 +13,12 @@ extension ContentView {
 	struct SequenceList: View {
 		@Binding var selectedSequence: Sequence?
 		
+		/// Search text for a list fuzzy filter by its title
 		@State private var searchText: String = ""
-		
-		@State private var confirmDelete: Bool = false
-		
-		@Environment(\.undoManager) var undoManager
+		/// Set the sequence to be deleted. Will trigger a confirmationDialog before deleting the sequence.
+		@State private var deleteSequence: Sequence?
+		/// Set the id of the sequence that requires focus to rename (row textfield focus)
+		@FocusState private var rowIsRenaming: UUID?
 		
 		@Environment(\.modelContext) private var modelContext
 		/// List of sequences from persistent data source
@@ -29,28 +30,45 @@ extension ContentView {
 			}
 		}
 		
+		/// Binding for the confirmationDialog when deleting a sequence
+		private var confirmDeleteSequence: Binding<Bool> {
+			Binding {
+				deleteSequence != nil
+			} set: { newValue in
+				if !newValue {
+					deleteSequence = nil
+				}
+			}
+		}
+		
+		// MARK: Body
+		
 		var body: some View {
 			VStack(alignment: .leading) {
 				List(selection: $selectedSequence) {
 					Section {
 						ForEach(filteredSequences) { sequence in
 							SequenceRowView(
-								title: Bindable(sequence).title
+								title: Bindable(sequence).title,
+								id: sequence.id,
+								isRenaming: $rowIsRenaming
 							)
 							.padding(.vertical, 3)
 							.tag(sequence)
+							.contextMenu { contextMenu(sequence: sequence) }
 						}
 					}
 				}
 				.listStyle(.sidebar)
 				// Delete by confirmation
-				.focusedValue(\.delete, confirmDeleteSelectedSequence)
-				.confirmationDialog("Delete Sequence?", isPresented: $confirmDelete, actions: {
+				.focusedValue(\.delete, { deleteSequence = selectedSequence })
+				.confirmationDialog("Delete Sequence?", isPresented: confirmDeleteSequence, actions: {
 					Button("Confirm", role: .destructive) {
-						deleteSelectedSequence()
+						guard let deleteSequence else { return }
+						delete(deleteSequence)
 					}
 				}, message: {
-					Text("Are you sure you want to delete \(selectedSequence?.title ?? "?")")
+					Text("Are you sure you want to delete \(deleteSequence?.title ?? "?")")
 				})
 				// Fuzzy search sequence
 				.searchable(
@@ -75,23 +93,48 @@ extension ContentView {
 	}
 }
 
+// MARK: Context menu
+
 extension ContentView.SequenceList {
+	@ViewBuilder
+	func contextMenu(sequence: Sequence) -> some View {
+		Button("Run All Actions", systemImage: "play.fill") {
+			let sequenceRunner = SequenceRunModel.shared
+			sequenceRunner.run(sequence.actions.sorted(by: \.listIndex, <))
+		}
+		
+		Button("Rename", systemImage: "pencil") {
+			rowIsRenaming = sequence.id
+		}
+		
+		Divider()
+		
+		Button("Delete", systemImage: "trash") {
+			deleteSequence = sequence
+		}
+	}
+}
+
+// MARK: List actions
+
+extension ContentView.SequenceList {
+	/// Add a new sequence to the list and set focus to renaming that sequence (textfield focus)
 	private func addSequence() {
-		let sequence = Sequence(title: NSLocalizedString("New Sequence", tableName: "Localizable", comment: ""))
+		let sequence = Sequence(title: "\(Date.now.formatted(date: .abbreviated, time: .shortened))")
 		modelContext.insert(sequence)
 		
 		selectedSequence = sequence
+		rowIsRenaming = sequence.id
 	}
 	
-	private func confirmDeleteSelectedSequence() {
-		confirmDelete = true
-	}
-	
-	private func deleteSelectedSequence() {
-		guard let selectedSequence else { return }
+	/// Delete the given sequence and resorts all listIndex
+	private func delete(_ sequence: Sequence?) {
+		guard let sequence else { return }
 		
-		modelContext.delete(selectedSequence)
-		self.selectedSequence = nil
+		modelContext.delete(sequence)
+		if selectedSequence == sequence {
+			self.selectedSequence = nil
+		}
 		
 		// save before moving ahead with other modifications
 		try? modelContext.save()

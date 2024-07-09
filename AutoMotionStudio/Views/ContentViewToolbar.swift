@@ -15,7 +15,7 @@ struct ContentViewToolbar: ToolbarContent {
 	/// List of actions from persistent data source
 	@Query(sort: \Action.listIndex) private var actions: [Action]
 	/// Model to run all actions
-	@State private var runtime = ActionRuntime()
+	@State private var sequenceRunner = SequenceRunModel.shared
 	
 	@MainActor
 	var body: some ToolbarContent {
@@ -23,35 +23,31 @@ struct ContentViewToolbar: ToolbarContent {
 		ToolbarItemGroup(placement: .primaryAction) {
 			Spacer(minLength: 0)
 			Menu {
-				Button(insertAction: .linearMove, modelContext: modelContext)
+				Button(insertAction: .linearMove, sequence: nil, modelContext: modelContext)
 				Divider()
-				Button(insertAction: .primaryClick, modelContext: modelContext)
-				Button(insertAction: .secondaryClick, modelContext: modelContext)
-				Button(insertAction: .dragStart, modelContext: modelContext)
-				Button(insertAction: .dragEnd, modelContext: modelContext)
+				Button(insertAction: .primaryClick, sequence: nil, modelContext: modelContext)
+				Button(insertAction: .secondaryClick, sequence: nil, modelContext: modelContext)
+				Button(insertAction: .dragStart, sequence: nil, modelContext: modelContext)
+				Button(insertAction: .dragEnd, sequence: nil, modelContext: modelContext)
 			} label: {
 				Label("Add Action", systemImage: "plus")
 			}
 			.menuIndicator(.hidden)
-			.disabled(runtime.isExecuting)
+			.disabled(sequenceRunner.isExecuting)
 		}
 		
-		if !runtime.isExecuting {
+		if !sequenceRunner.isExecuting {
 			// default list of toolbar items
 			ToolbarItemGroup(placement: .navigation) {
 				Button("Run", systemImage: "play.fill") {
-					runtime.execute(actions)
+					sequenceRunner.run(actions)
 				}
-				
-//				Button("Export", systemImage: "square.and.arrow.up") {
-//					
-//				}
 			}
 		} else {
 			// list of toolbar items during execution of ActionRuntime
 			ToolbarItemGroup(placement: .navigation) {
 				Button("Stop", systemImage: "stop.fill") {
-					runtime.cancelActions()
+					sequenceRunner.stop()
 				}
 				
 				if let shortcutDescription = KeyboardShortcuts.getShortcut(for: .stopActionExecution)?.description {
@@ -59,23 +55,6 @@ struct ContentViewToolbar: ToolbarContent {
 						.font(.footnote)
 				}
 			}
-		}
-	}
-}
-
-extension Button where Label == Text {
-	/// Button init to directly add a new action into the model context
-	init(insertAction: ActionType, modelContext: ModelContext) {
-		self.init(insertAction.description) {
-			let actions = try? modelContext.fetch(FetchDescriptor<Action>())
-			let listIndexMax = actions?.map(\.listIndex).max()
-			
-			let listIndex = if let listIndexMax { listIndexMax + 1 } else { 0 }
-			let action = Action.new(
-				type: insertAction,
-				listIndex: listIndex
-			)
-			modelContext.insert(action)
 		}
 	}
 }

@@ -9,7 +9,7 @@ import SwiftUI
 import KeyboardShortcuts
 
 /// Action detail view that is shown when list element in the sidebar is being selected
-struct DetailView: View {
+struct ActionDetailView: View {
 	@Binding var type: ActionType
 	@Binding var mouseCoordinates: Point
 	@Binding var mouseEasing: MouseEasing
@@ -75,7 +75,7 @@ struct DetailView: View {
 				Text("Target Mouse Coordinates")
 			} footer: {
 				if let shortcutDescriptionGetMouseCoordinates {
-					Text("Press \(shortcutDescriptionGetMouseCoordinates) to get current mouse coordinates.")
+					Text("Press \(shortcutDescriptionGetMouseCoordinates) to set current mouse coordinates.")
 						.foregroundStyle(Color.secondary)
 						.font(.footnote)
 					SettingsLink()
@@ -146,7 +146,8 @@ struct DetailView: View {
 }
 
 #Preview {
-	let action = Action.new(type: .linearMove)
-	return DetailView(type: .constant(action.type), mouseCoordinates: .constant(action.mouseCoordinates), mouseEasing: .constant(action.mouseEasing), delay: .constant(action.delay))
+	let sequence = Sequence(title: "Preview Sequence")
+	let action = Action(type: .linearMove, sequence: sequence)
+	return ActionDetailView(type: .constant(action.type), mouseCoordinates: .constant(action.mouseCoordinates), mouseEasing: .constant(action.mouseEasing), delay: .constant(action.delay))
 		.frame(width: 400, height: 800)
 }

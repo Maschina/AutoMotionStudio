@@ -15,85 +15,32 @@ struct ContentView: View {
 	@Environment(\.undoManager) var undoManager
 	/// List of actions from persistent data source
 	@Query(sort: \Action.listIndex) private var actions: [Action]
-	/// Multiple selections the user can choose from the sidebar
+	/// Selected sequence from the sidebar
+	@State private var selectedSequence: Sequence?
+	/// Multiple selections the user can choose from the content list
 	@State private var selectedActions: Set<Action> = []
+	
+	@FocusedValue (\.delete) var delete
 	
     var body: some View {
 		NavigationSplitView {
-			// Navigation View sidebar
-			
-			List(selection: $selectedActions) {
-				ForEach(actions) { action in
-					ListElement(
-						type: action.type,
-						listIndex: action.listIndex,
-						mouseEasing: action.mouseEasing,
-						delay: action.delay
-					)
-					.padding(.vertical, 3)
-					.tag(action)
-				}
-				.onMove(perform: onMove)
-				.onDelete(perform: onDelete)
-			}
+			SequenceList(
+				selectedSequence: $selectedSequence
+			)
 			.frame(minWidth: 190, idealWidth: 200)
-			.toolbar {
-				ContentViewToolbar()
-			}
+		} content: {
+			ActionList(
+				selectedSequence: selectedSequence,
+				selectedActions: $selectedActions
+			)
+			.frame(minWidth: 190, idealWidth: 200)
 		} detail: {
-			// Navigation View details
-			
-			if selectedActions.count == 1, let selectedAction = selectedActions.first {
-				// single selection details
-				DetailView(
-					type: Bindable(selectedAction).type,
-					mouseCoordinates: Bindable(selectedAction).mouseCoordinates,
-					mouseEasing: Bindable(selectedAction).mouseEasing,
-					delay: Bindable(selectedAction).delay
-				)
-				.toolbar {
-					deleteSelectionToolbar
-				}
-			} else if selectedActions.count > 1 {
-				// multiple selections
-				ZStack {
-					ForEach(Array(selectedActions).reversed().dropLast(max(selectedActions.count - 5, 0)), id: \.self) { selectedAction in
-						let randomRotation = Double.random(in: -3.5...3.5)
-						DetailView(
-							type: Bindable(selectedAction).type,
-							mouseCoordinates: Bindable(selectedAction).mouseCoordinates,
-							mouseEasing: Bindable(selectedAction).mouseEasing,
-							delay: Bindable(selectedAction).delay
-						)
-						.disabled(true)
-						.clipShape(RoundedRectangle(cornerRadius: 15.0))
-						.shadow(radius: 2)
-						.padding(25)
-						.rotationEffect(.degrees(randomRotation))
-					}
-				}
-				.toolbar {
-					deleteSelectionToolbar
-				}
-			} else {
-				// no selection
-				VStack(spacing: 25) {
-					Text("AutoMotion Studio")
-						.font(.largeTitle)
-						.fontWeight(.semibold)
-					
-					Text("Select an Action in the sidebar or add a new Action from the \(Image(systemName: "plus")) menu.")
-				}
-				.multilineTextAlignment(.center)
-				.foregroundStyle(Color.secondary)
-				.padding(.horizontal, 30)
-			}
+			Detail(
+				selectedActions: $selectedActions
+			)
 		}
-		.navigationTitle("")
 		// perform actions when user presses ⌫ key
-		.onDeleteCommand {
-			deleteSelectedAction()
-		}
+		.onDeleteCommand(perform: delete)
 		// receive notification that selections has been changed
 		.onReceive(for: .selectionsChanged) { newValue in
 			selectedActions = newValue
@@ -115,31 +62,18 @@ struct ContentView: View {
 			}
 		}
 	}
+	
+	var deleteSelectedActionsToolbar: some ToolbarContent {
+		ToolbarItem(placement: .destructiveAction) {
+			Button("Delete", systemImage: "trash") {
+				deleteSelectedActions()
+			}
+		}
+	}
 }
 
 extension ContentView {
-	private func onMove(indices: IndexSet, newOffset: Int) {
-		var s = actions
-		s.move(fromOffsets: indices, toOffset: newOffset)
-		// make sure to re-order the list indicies
-		s.reorder(keyPath: \.listIndex)
-	}
-	
-	private func onDelete(indices: IndexSet) {
-		for i in indices {
-			let action = actions[i]
-			modelContext.delete(action)
-			selectedActions.remove(action)
-		}
-		// save before moving ahead with other modifications
-		try? modelContext.save()
-		
-		// make sure to re-order the list indicies
-		var s = actions
-		s.reorder(keyPath: \.listIndex)
-	}
-	
-	private func deleteSelectedAction() {
+	private func deleteSelectedActions() {
 		for selectedAction in selectedActions {
 			modelContext.delete(selectedAction)
 			selectedActions.remove(selectedAction)
@@ -150,14 +84,6 @@ extension ContentView {
 		// make sure to re-order the list indicies
 		var s = actions
 		s.reorder(keyPath: \.listIndex)
-	}
-	
-	var deleteSelectionToolbar: some ToolbarContent {
-		ToolbarItem(placement: .destructiveAction) {
-			Button("Delete", systemImage: "trash") {
-				deleteSelectedAction()
-			}
-		}
 	}
 }
 

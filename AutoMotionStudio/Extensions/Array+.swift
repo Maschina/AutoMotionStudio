@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Array where Element == Action {
+extension Array {
 	// Function to increment the specified integer property
 	mutating func reorder(keyPath: WritableKeyPath<Element, Int>) {
 		var i = 0

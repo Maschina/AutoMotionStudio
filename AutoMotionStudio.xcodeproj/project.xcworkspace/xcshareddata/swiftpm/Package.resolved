@@ -1,5 +1,5 @@
 {
-  "originHash" : "69c39523ac0471922b625cc56b8722155cfd2afd660bdd4f5ff67335b5b87714",
+  "originHash" : "69f51bb63ea588f9b0d56f54db7be8cd2e9607a19af636ac7b8df08b7afba4dc",
   "pins" : [
     {
       "identity" : "keyboardshortcuts",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "2e5f15581fefb821d4b366e57d817be8bf12aa58",
         "version" : "2.0.1"
+      }
+    },
+    {
+      "identity" : "swiftextensions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Maschina/SwiftExtensions",
+      "state" : {
+        "branch" : "main",
+        "revision" : "5337522fc4aca04f150be0eca8236799a2c62154"
       }
     }
   ],

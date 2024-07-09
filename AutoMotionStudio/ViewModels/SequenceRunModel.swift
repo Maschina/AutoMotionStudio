@@ -6,28 +6,31 @@
 //
 
 import Foundation
-import SwiftData
 import KeyboardShortcuts
+import Cocoa
 
 /// Model to execute actions in the respective order
 @Observable
-class ActionRuntime {
+class SequenceRunModel {
+	/// ActionRuntime singleton
+	static var shared: SequenceRunModel = .init()
+	
 	/// Indicates if action runtime is running
 	private(set) var isExecuting: Bool = false
 	
 	private var executionTask: Task<Void, any Error>?
 	
-	init() {
+	private init() {
 		Task { [weak self] in
 			for await event in KeyboardShortcuts.events(for: .stopActionExecution) where event == .keyUp {
-				self?.cancelActions()
+				self?.stop()
 			}
 		}
 	}
 	
 	/// Start execution of the given actions
 	/// - Parameter actions: List actions to be executed
-	func execute(_ actions: Actions) {
+	func run(_ actions: [Action]) {
 		print("Executing \(actions.count) actions…")
 		
 		self.executionTask?.cancel()
@@ -50,7 +53,7 @@ class ActionRuntime {
 	}
 	
 	/// Immediately stop the current execution of the previously given action list
-	func cancelActions() {
+	func stop() {
 		self.executionTask?.cancel()
 		self.isExecuting = false
 		print("Cancelled execution.")

@@ -1,5 +1,4 @@
 //
-//  TipStopSequenceRun.swift
 //  AutoMotionStudio
 //
 //  Created by Robert Hahn on 08.07.24.

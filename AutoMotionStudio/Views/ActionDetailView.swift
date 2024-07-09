@@ -146,8 +146,8 @@ struct ActionDetailView: View {
 }
 
 #Preview {
-	let sequence = Sequence(title: "Preview Sequence")
-	let action = Action(type: .linearMove, sequence: sequence)
+	let workflow = Workflow(title: "Preview Workflow")
+	let action = Action(type: .linearMove, workflow: workflow)
 	return ActionDetailView(type: .constant(action.type), mouseCoordinates: .constant(action.mouseCoordinates), mouseEasing: .constant(action.mouseEasing), delay: .constant(action.delay))
 		.frame(width: 400, height: 800)
 }

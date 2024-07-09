@@ -166,7 +166,7 @@ extension Action {
 			mouseEasing: self.mouseEasing,
 			delay: self.delay,
 			listIndex: self.listIndex,
-			sequence: self.sequence
+			workflow: self.workflow
 		)
 	}
 }

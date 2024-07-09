@@ -17,7 +17,7 @@ struct AppCommands: Commands {
 	/// List of actions from persistent data source
 	@Query(sort: \Action.listIndex) private var actions: [Action]
 	/// Model to run all actions
-	@State private var sequence = SequenceRunModel.shared
+	@State private var workflowRunner = WorkflowRunModel.shared
 	
 	/// Indicating if there are any undo operations in the stack
 	@State private var canUndo: Bool = false
@@ -66,23 +66,23 @@ struct AppCommands: Commands {
 			.disabled(selectedActions.isEmpty)
 		}
 		
-		CommandMenu("Sequence") {
+		CommandMenu("Workflow") {
 			Button("Run All Actions") {
-				sequence.run(actions)
+				workflowRunner.run(actions)
 			}
 			.keyboardShortcut("r", modifiers: .command)
-			.disabled(sequence.isExecuting)
+			.disabled(workflowRunner.isExecuting)
 			
 			Button("Run Selected Actions") {
-				sequence.run(selectedActions.sorted(by: \.listIndex, <))
+				workflowRunner.run(selectedActions.sorted(by: \.listIndex, <))
 			}
 			.keyboardShortcut("r", modifiers: [.command, .shift])
-			.disabled(selectedActions.isEmpty || sequence.isExecuting)
+			.disabled(selectedActions.isEmpty || workflowRunner.isExecuting)
 			
 			Divider()
 			
 			Button("Stop") {
-				sequence.stop()
+				workflowRunner.stop()
 			}
 			.keyboardShortcut(.stopActionExecution)
 		}

@@ -12,24 +12,24 @@ import TipKit
 
 extension ContentView {
 	struct ActionList: View {
-		let selectedSequence: Sequence?
+		let selectedWorkflow: Workflow?
 		/// Multiple selections the user can choose from the content list
 		@Binding var selectedActions: Set<Action>
 		/// Model to run all actions
-		@State private var sequenceRunner = SequenceRunModel.shared
+		@State private var workflowRunner = WorkflowRunModel.shared
 		/// Toggle to trigger granting accessibility permissions
 		@State private var giveAccessibilityPermissions: Bool = false
 		
 		@Environment(\.modelContext) private var modelContext
 		@Query(animation: .default) private var actions: [Action]
 		
-		init(selectedSequence: Sequence?, selectedActions: Binding<Set<Action>>) {
+		init(selectedWorkflow: Workflow?, selectedActions: Binding<Set<Action>>) {
 			self._selectedActions = selectedActions
-			self.selectedSequence = selectedSequence
+			self.selectedWorkflow = selectedWorkflow
 			
-			let selectedSequenceId = selectedSequence?.id
+			let selectedWorkflowId = selectedWorkflow?.id
 			let predicate = #Predicate<Action> {
-				$0.sequence?.id == selectedSequenceId
+				$0.workflow?.id == selectedWorkflowId
 			}
 			self._actions = Query(filter: predicate, sort: \Action.listIndex, animation: .default)
 		}
@@ -37,7 +37,7 @@ extension ContentView {
 		// MARK: Body
 		
 		var body: some View {
-			if let selectedSequence {
+			if let selectedWorkflow {
 				List(selection: $selectedActions) {
 					ForEach(actions) { action in
 						ActionRowView(
@@ -58,9 +58,9 @@ extension ContentView {
 				.focusedValue(\.delete, { delete(selectedActions) })
 				.toolbar {
 					Toolbar(
-						selectedSequence: selectedSequence,
+						selectedWorkflow: selectedWorkflow,
 						selectedActions: $selectedActions,
-						sequenceRunner: sequenceRunner,
+						workflowRunner: workflowRunner,
 						actions: actions,
 						giveAccessibilityPermissions: $giveAccessibilityPermissions
 					)
@@ -84,7 +84,7 @@ extension ContentView {
 				}
 			} else {
 				// no selection
-				Text("No Sequence Selected")
+				Text("No Workflow Selected")
 					.font(.largeTitle)
 					.fontWeight(.light)
 					.multilineTextAlignment(.center)
@@ -110,7 +110,7 @@ extension ContentView.ActionList {
 						.frame(height: 50)
 						.foregroundStyle(Color.accentColor)
 					
-					Text("AutoMotion Studio requires Accessibility Permissions to automatically move your mouse and access your keyboard. The granted permissions are used during the sequence run only.")
+					Text("AutoMotion Studio requires Accessibility Permissions to automatically move your mouse and access your keyboard. The granted permissions are used during the workflow run only.")
 						.multilineTextAlignment(.center)
 					
 					Image(.accessibilityPermissions)
@@ -149,7 +149,7 @@ extension ContentView.ActionList {
 				Divider()
 				
 				Button("Preview Selected Actions", systemImage: "play.fill") {
-					sequenceRunner.run(selectedActions.sorted(by: \.listIndex, <))
+					workflowRunner.run(selectedActions.sorted(by: \.listIndex, <))
 				}
 				.keyboardShortcut("r", modifiers: [.command, .shift])
 				
@@ -161,7 +161,7 @@ extension ContentView.ActionList {
 			}
 		} else {
 			Button("Preview Action", systemImage: "play.fill") {
-				sequenceRunner.run([focusAction])
+				workflowRunner.run([focusAction])
 			}
 			.keyboardShortcut("r", modifiers: [.command, .shift])
 			
@@ -179,9 +179,9 @@ extension ContentView.ActionList {
 
 extension ContentView.ActionList {
 	struct Toolbar: ToolbarContent {
-		let selectedSequence: Sequence
+		let selectedWorkflow: Workflow
 		@Binding var selectedActions: Set<Action>
-		let sequenceRunner: SequenceRunModel
+		let workflowRunner: WorkflowRunModel
 		let actions: [Action]
 		@Binding var giveAccessibilityPermissions: Bool
 		
@@ -194,24 +194,24 @@ extension ContentView.ActionList {
 			// add action button
 			ToolbarItem(placement: .confirmationAction) {
 				Menu {
-					Button(insertAction: .linearMove, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
+					Button(insertAction: .linearMove, workflow: selectedWorkflow, modelContext: modelContext, selectedActions: $selectedActions)
 					Divider()
-					Button(insertAction: .primaryClick, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
-					Button(insertAction: .secondaryClick, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
-					Button(insertAction: .dragStart, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
-					Button(insertAction: .dragEnd, sequence: selectedSequence, modelContext: modelContext, selectedActions: $selectedActions)
+					Button(insertAction: .primaryClick, workflow: selectedWorkflow, modelContext: modelContext, selectedActions: $selectedActions)
+					Button(insertAction: .secondaryClick, workflow: selectedWorkflow, modelContext: modelContext, selectedActions: $selectedActions)
+					Button(insertAction: .dragStart, workflow: selectedWorkflow, modelContext: modelContext, selectedActions: $selectedActions)
+					Button(insertAction: .dragEnd, workflow: selectedWorkflow, modelContext: modelContext, selectedActions: $selectedActions)
 				} label: {
 					Label("Add Action", systemImage: "plus")
 				}
 				.menuIndicator(.hidden)
-				.disabled(sequenceRunner.isExecuting)
+				.disabled(workflowRunner.isExecuting)
 			}
 			
-			if !sequenceRunner.isExecuting {
+			if !workflowRunner.isExecuting {
 				// runner play button
 				ToolbarItem(placement: .primaryAction) {
 					Button("Run", systemImage: "play.fill") {
-						startSequenceRunner()
+						startWorkflowRunner()
 					}
 					// Avoid animation
 					.transaction { $0.animation = nil }
@@ -221,7 +221,7 @@ extension ContentView.ActionList {
 				// runner stop button
 				ToolbarItem(placement: .primaryAction) {
 					Button("Stop", systemImage: "stop.fill") {
-						stopSequenceRunner()
+						stopWorkflowRunner()
 					}
 					.popoverTip(stopActionShortcutTip, arrowEdge: .trailing)
 					.task {
@@ -231,16 +231,16 @@ extension ContentView.ActionList {
 			}
 		}
 		
-		private func startSequenceRunner() {
+		private func startWorkflowRunner() {
 			guard PermissionsService.checkIsTrusted() else {
 				giveAccessibilityPermissions = true
 				return
 			}
-			sequenceRunner.run(actions)
+			workflowRunner.run(actions)
 		}
 		
-		private func stopSequenceRunner() {
-			sequenceRunner.stop()
+		private func stopWorkflowRunner() {
+			workflowRunner.stop()
 		}
 	}
 }

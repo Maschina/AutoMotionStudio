@@ -11,9 +11,9 @@ import Cocoa
 
 /// Model to execute actions in the respective order
 @Observable
-class SequenceRunModel {
+class WorkflowRunModel {
 	/// ActionRuntime singleton
-	static var shared: SequenceRunModel = .init()
+	static var shared: WorkflowRunModel = .init()
 	
 	/// Indicates if action runtime is running
 	private(set) var isExecuting: Bool = false

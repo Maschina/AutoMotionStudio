@@ -8,16 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		66219CC12C369AD600E06467 /* View+KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66219CC02C369AD600E06467 /* View+KeyboardShortcuts.swift */; };
-		662FC8592C37373C0028BCD7 /* Sequence.V2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC8582C37373C0028BCD7 /* Sequence.V2.swift */; };
+		662FC8592C37373C0028BCD7 /* Workflow.V2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC8582C37373C0028BCD7 /* Workflow.V2.swift */; };
 		662FC85B2C373C170028BCD7 /* SchemaVersions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC85A2C373C170028BCD7 /* SchemaVersions.swift */; };
 		662FC85E2C3743940028BCD7 /* Action+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC85D2C3743940028BCD7 /* Action+.swift */; };
-		662FC8602C3745520028BCD7 /* Sequence+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC85F2C3745520028BCD7 /* Sequence+.swift */; };
+		662FC8602C3745520028BCD7 /* Workflow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC85F2C3745520028BCD7 /* Workflow+.swift */; };
 		662FC8622C37459E0028BCD7 /* Action.V2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC8612C37459E0028BCD7 /* Action.V2.swift */; };
 		662FC8642C3745F30028BCD7 /* DataMigrationsPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC8632C3745F30028BCD7 /* DataMigrationsPlan.swift */; };
 		662FC8662C38073C0028BCD7 /* SequenceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC8652C38073C0028BCD7 /* SequenceRowView.swift */; };
 		662FC8682C388FD00028BCD7 /* ContentView+ActionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FC8672C388FD00028BCD7 /* ContentView+ActionList.swift */; };
 		663689EB2C3450B200C9DCCB /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663689EA2C3450B200C9DCCB /* AppCommands.swift */; };
-		666E89502C389A380043248F /* ContentView+SequenceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E894F2C389A380043248F /* ContentView+SequenceList.swift */; };
+		666E89502C389A380043248F /* ContentView+WorkflowList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E894F2C389A380043248F /* ContentView+WorkflowList.swift */; };
 		666E89522C38A2220043248F /* ContentView+Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E89512C38A2220043248F /* ContentView+Detail.swift */; };
 		666E89552C39E3390043248F /* SwiftExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 666E89542C39E3390043248F /* SwiftExtensions */; };
 		666E89572C39E5170043248F /* FocusedValues+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E89562C39E5170043248F /* FocusedValues+Delete.swift */; };
@@ -40,7 +40,7 @@
 		667BD2A42C2D80D600E9F016 /* PropertyWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2A32C2D80D600E9F016 /* PropertyWrappers.swift */; };
 		667BD2A72C2D8C6A00E9F016 /* Task+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2A62C2D8C6A00E9F016 /* Task+.swift */; };
 		667BD2A92C2E094F00E9F016 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2A82C2E094F00E9F016 /* Point.swift */; };
-		667BD2C82C2E207900E9F016 /* SequenceRunModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2C72C2E207900E9F016 /* SequenceRunModel.swift */; };
+		667BD2C82C2E207900E9F016 /* WorkflowRunModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2C72C2E207900E9F016 /* WorkflowRunModel.swift */; };
 		667BD2CA2C2E9E5200E9F016 /* MouseEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2C92C2E9E5200E9F016 /* MouseEasing.swift */; };
 		667BD2CC2C2EC31800E9F016 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CB2C2EC31800E9F016 /* SettingsView.swift */; };
 		667BD2CE2C30AC0F00E9F016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */; };
@@ -56,16 +56,16 @@
 
 /* Begin PBXFileReference section */
 		66219CC02C369AD600E06467 /* View+KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+KeyboardShortcuts.swift"; sourceTree = "<group>"; };
-		662FC8582C37373C0028BCD7 /* Sequence.V2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.V2.swift; sourceTree = "<group>"; };
+		662FC8582C37373C0028BCD7 /* Workflow.V2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workflow.V2.swift; sourceTree = "<group>"; };
 		662FC85A2C373C170028BCD7 /* SchemaVersions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaVersions.swift; sourceTree = "<group>"; };
 		662FC85D2C3743940028BCD7 /* Action+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Action+.swift"; sourceTree = "<group>"; };
-		662FC85F2C3745520028BCD7 /* Sequence+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+.swift"; sourceTree = "<group>"; };
+		662FC85F2C3745520028BCD7 /* Workflow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Workflow+.swift"; sourceTree = "<group>"; };
 		662FC8612C37459E0028BCD7 /* Action.V2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.V2.swift; sourceTree = "<group>"; };
 		662FC8632C3745F30028BCD7 /* DataMigrationsPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMigrationsPlan.swift; sourceTree = "<group>"; };
 		662FC8652C38073C0028BCD7 /* SequenceRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceRowView.swift; sourceTree = "<group>"; };
 		662FC8672C388FD00028BCD7 /* ContentView+ActionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+ActionList.swift"; sourceTree = "<group>"; };
 		663689EA2C3450B200C9DCCB /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
-		666E894F2C389A380043248F /* ContentView+SequenceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+SequenceList.swift"; sourceTree = "<group>"; };
+		666E894F2C389A380043248F /* ContentView+WorkflowList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+WorkflowList.swift"; sourceTree = "<group>"; };
 		666E89512C38A2220043248F /* ContentView+Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+Detail.swift"; sourceTree = "<group>"; };
 		666E89562C39E5170043248F /* FocusedValues+Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FocusedValues+Delete.swift"; sourceTree = "<group>"; };
 		666E89582C39E6BD0043248F /* Button+ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+ActionType.swift"; sourceTree = "<group>"; };
@@ -83,14 +83,13 @@
 		667BD2912C2CB94200E9F016 /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
 		667BD2932C2CBD4300E9F016 /* PasteboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardModel.swift; sourceTree = "<group>"; };
 		667BD2972C2D4E2300E9F016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewToolbar.swift; sourceTree = "<group>"; };
 		667BD29D2C2D73E600E9F016 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		667BD29F2C2D74D600E9F016 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
 		667BD2A12C2D7A7600E9F016 /* ActionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRowView.swift; sourceTree = "<group>"; };
 		667BD2A32C2D80D600E9F016 /* PropertyWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyWrappers.swift; sourceTree = "<group>"; };
 		667BD2A62C2D8C6A00E9F016 /* Task+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+.swift"; sourceTree = "<group>"; };
 		667BD2A82C2E094F00E9F016 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
-		667BD2C72C2E207900E9F016 /* SequenceRunModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceRunModel.swift; sourceTree = "<group>"; };
+		667BD2C72C2E207900E9F016 /* WorkflowRunModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowRunModel.swift; sourceTree = "<group>"; };
 		667BD2C92C2E9E5200E9F016 /* MouseEasing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseEasing.swift; sourceTree = "<group>"; };
 		667BD2CB2C2EC31800E9F016 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		667BD2CD2C30AC0F00E9F016 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -120,8 +119,8 @@
 		662FC85C2C3740C00028BCD7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				662FC8582C37373C0028BCD7 /* Sequence.V2.swift */,
-				662FC85F2C3745520028BCD7 /* Sequence+.swift */,
+				662FC8582C37373C0028BCD7 /* Workflow.V2.swift */,
+				662FC85F2C3745520028BCD7 /* Workflow+.swift */,
 				667BD2852C2CA35A00E9F016 /* Action.V1.swift */,
 				662FC8612C37459E0028BCD7 /* Action.V2.swift */,
 				662FC85D2C3743940028BCD7 /* Action+.swift */,
@@ -179,7 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				667BD2932C2CBD4300E9F016 /* PasteboardModel.swift */,
-				667BD2C72C2E207900E9F016 /* SequenceRunModel.swift */,
+				667BD2C72C2E207900E9F016 /* WorkflowRunModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -188,13 +187,12 @@
 			isa = PBXGroup;
 			children = (
 				667BD2742C2C9DC500E9F016 /* ContentView.swift */,
-				666E894F2C389A380043248F /* ContentView+SequenceList.swift */,
+				666E894F2C389A380043248F /* ContentView+WorkflowList.swift */,
 				662FC8672C388FD00028BCD7 /* ContentView+ActionList.swift */,
 				666E89512C38A2220043248F /* ContentView+Detail.swift */,
 				662FC8652C38073C0028BCD7 /* SequenceRowView.swift */,
 				667BD2A12C2D7A7600E9F016 /* ActionRowView.swift */,
 				667BD28A2C2CA3DA00E9F016 /* ActionDetailView.swift */,
-				667BD2992C2D547000E9F016 /* ContentViewToolbar.swift */,
 				667BD2CB2C2EC31800E9F016 /* SettingsView.swift */,
 				666E895A2C3BCCC00043248F /* TipStopSequenceRun.swift */,
 			);
@@ -337,7 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				667BD2C82C2E207900E9F016 /* SequenceRunModel.swift in Sources */,
+				667BD2C82C2E207900E9F016 /* WorkflowRunModel.swift in Sources */,
 				667BD2752C2C9DC500E9F016 /* ContentView.swift in Sources */,
 				662FC8622C37459E0028BCD7 /* Action.V2.swift in Sources */,
 				667BD2732C2C9DC500E9F016 /* AutoMotionStudioApp.swift in Sources */,
@@ -353,14 +351,14 @@
 				66809FBB2C33E2C500CD6758 /* NotificationCenter+TypeSafe.swift in Sources */,
 				667BD2942C2CBD4300E9F016 /* PasteboardModel.swift in Sources */,
 				66809FAE2C33015B00CD6758 /* Container.swift in Sources */,
-				662FC8592C37373C0028BCD7 /* Sequence.V2.swift in Sources */,
+				662FC8592C37373C0028BCD7 /* Workflow.V2.swift in Sources */,
 				663689EB2C3450B200C9DCCB /* AppCommands.swift in Sources */,
 				66809FB02C3345C300CD6758 /* Array+.swift in Sources */,
 				667BD2A22C2D7A7600E9F016 /* ActionRowView.swift in Sources */,
 				662FC8682C388FD00028BCD7 /* ContentView+ActionList.swift in Sources */,
-				666E89502C389A380043248F /* ContentView+SequenceList.swift in Sources */,
+				666E89502C389A380043248F /* ContentView+WorkflowList.swift in Sources */,
 				667BD29E2C2D73E600E9F016 /* CGPoint+.swift in Sources */,
-				662FC8602C3745520028BCD7 /* Sequence+.swift in Sources */,
+				662FC8602C3745520028BCD7 /* Workflow+.swift in Sources */,
 				667BD2A72C2D8C6A00E9F016 /* Task+.swift in Sources */,
 				666E89522C38A2220043248F /* ContentView+Detail.swift in Sources */,
 				662FC8642C3745F30028BCD7 /* DataMigrationsPlan.swift in Sources */,

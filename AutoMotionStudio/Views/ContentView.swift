@@ -15,8 +15,8 @@ struct ContentView: View {
 	@Environment(\.undoManager) var undoManager
 	/// List of actions from persistent data source
 	@Query(sort: \Action.listIndex) private var actions: [Action]
-	/// Selected sequence from the sidebar
-	@State private var selectedSequence: Sequence?
+	/// Selected workflow from the sidebar
+	@State private var selectedWorkflow: Workflow?
 	/// Multiple selections the user can choose from the content list
 	@State private var selectedActions: Set<Action> = []
 	
@@ -24,13 +24,13 @@ struct ContentView: View {
 	
     var body: some View {
 		NavigationSplitView {
-			SequenceList(
-				selectedSequence: $selectedSequence
+			WorkflowList(
+				selectedWorkflow: $selectedWorkflow
 			)
 			.frame(minWidth: 190, idealWidth: 200)
 		} content: {
 			ActionList(
-				selectedSequence: selectedSequence,
+				selectedWorkflow: selectedWorkflow,
 				selectedActions: $selectedActions
 			)
 			.frame(minWidth: 190, idealWidth: 200)

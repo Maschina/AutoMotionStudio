@@ -17,6 +17,8 @@ extension ContentView {
 		@Binding var selectedActions: Set<Action>
 		/// Model to run all actions
 		@State private var sequenceRunner = SequenceRunModel.shared
+		/// Toggle to trigger granting accessibility permissions
+		@State private var giveAccessibilityPermissions: Bool = false
 		
 		@Environment(\.modelContext) private var modelContext
 		@Query(animation: .default) private var actions: [Action]
@@ -59,8 +61,26 @@ extension ContentView {
 						selectedSequence: selectedSequence,
 						selectedActions: $selectedActions,
 						sequenceRunner: sequenceRunner,
-						actions: actions
+						actions: actions,
+						giveAccessibilityPermissions: $giveAccessibilityPermissions
 					)
+				}
+				// manage accessibility permission request
+				.sheet(isPresented: $giveAccessibilityPermissions) {
+					AccessibilityPermissionRequest(
+						giveAccessibilityPermissions: $giveAccessibilityPermissions
+					)
+				}
+				// auto-close accessibility permission request sheet
+				.onReceive(for: .windowDidChange) { status in
+					switch status {
+						case .didBecomeFocused:
+							guard giveAccessibilityPermissions, PermissionsService.checkIsTrusted() else { break }
+							giveAccessibilityPermissions = false
+							
+						default:
+							break
+					}
 				}
 			} else {
 				// no selection
@@ -71,6 +91,50 @@ extension ContentView {
 					.foregroundStyle(Color.secondary)
 					.padding(.horizontal, 30)
 			}
+		}
+	}
+}
+
+// MARK: Accessibility Permission
+
+extension ContentView.ActionList {
+	struct AccessibilityPermissionRequest: View {
+		@Binding var giveAccessibilityPermissions: Bool
+		
+		var body: some View {
+			NavigationStack {
+				VStack(spacing: 20) {
+					Image(systemName: "lock.circle")
+						.resizable()
+						.scaledToFit()
+						.frame(height: 50)
+						.foregroundStyle(Color.accentColor)
+					
+					Text("AutoMotion Studio requires Accessibility Permissions to automatically move your mouse and access your keyboard. The granted permissions are used during the sequence run only.")
+						.multilineTextAlignment(.center)
+					
+					Image(.accessibilityPermissions)
+						.resizable()
+						.scaledToFit()
+						.frame(height: 39)
+						.shadow(radius: 2, x: 0, y: 1)
+				}
+				.toolbar {
+					ToolbarItem(placement: .confirmationAction) {
+						Button("Grant Accessibility Permissions…") {
+							PermissionsService.acquireAccessibilityPrivileges()
+						}
+					}
+					
+					ToolbarItem(placement: .cancellationAction) {
+						Button("Dismiss") {
+							giveAccessibilityPermissions = false
+						}
+					}
+				}
+			}
+			.frame(width: 350)
+			.padding()
 		}
 	}
 }
@@ -119,6 +183,7 @@ extension ContentView.ActionList {
 		@Binding var selectedActions: Set<Action>
 		let sequenceRunner: SequenceRunModel
 		let actions: [Action]
+		@Binding var giveAccessibilityPermissions: Bool
 		
 		@Environment(\.modelContext) private var modelContext
 		
@@ -146,7 +211,7 @@ extension ContentView.ActionList {
 				// runner play button
 				ToolbarItem(placement: .primaryAction) {
 					Button("Run", systemImage: "play.fill") {
-						sequenceRunner.run(actions)
+						startSequenceRunner()
 					}
 					// Avoid animation
 					.transaction { $0.animation = nil }
@@ -156,7 +221,7 @@ extension ContentView.ActionList {
 				// runner stop button
 				ToolbarItem(placement: .primaryAction) {
 					Button("Stop", systemImage: "stop.fill") {
-						sequenceRunner.stop()
+						stopSequenceRunner()
 					}
 					.popoverTip(stopActionShortcutTip, arrowEdge: .trailing)
 					.task {
@@ -164,6 +229,18 @@ extension ContentView.ActionList {
 					}
 				}
 			}
+		}
+		
+		private func startSequenceRunner() {
+			guard PermissionsService.checkIsTrusted() else {
+				giveAccessibilityPermissions = true
+				return
+			}
+			sequenceRunner.run(actions)
+		}
+		
+		private func stopSequenceRunner() {
+			sequenceRunner.stop()
 		}
 	}
 }

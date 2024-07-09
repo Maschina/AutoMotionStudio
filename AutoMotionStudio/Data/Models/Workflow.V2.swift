@@ -1,5 +1,4 @@
 //
-//  Sequence.swift
 //  AutoMotionStudio
 //
 //  Created by Robert Hahn on 04.07.24.
@@ -9,19 +8,19 @@ import Foundation
 import SwiftData
 
 extension SchemaV2 {
-	/// Model to store a sequence. A sequence holds an array of actions.
+	/// Model to store a workflow. A workflow holds an array of actions.
 	@Model
-	final class Sequence: Identifiable, Codable, Hashable {
+	final class Workflow: Identifiable, Codable, Hashable {
 		/// ID of the action to identify its uniqueness
 		@Attribute(.unique) var id: UUID = UUID()
-		/// Describing title of the sequence
+		/// Describing title of the workflow
 		var title: String
 		/// Creation timestamp
 		var createdOn: Date = Date.now
 		/// List index in the sidebar view
 		var listIndex: Int = 0
-		/// List of actions belonging to the sequence
-		@Relationship(deleteRule: .cascade, inverse: \Action.sequence)
+		/// List of actions belonging to the workflow
+		@Relationship(deleteRule: .cascade, inverse: \Action.workflow)
 		var actions: [Action] = []
 		
 		init(title: String) {
@@ -54,7 +53,7 @@ extension SchemaV2 {
 		
 		// MARK: Hashable
 		
-		static func == (lhs: Sequence, rhs: Sequence) -> Bool {
+		static func == (lhs: Workflow, rhs: Workflow) -> Bool {
 			lhs.id == rhs.id
 		}
 		

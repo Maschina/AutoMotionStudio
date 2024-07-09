@@ -22,20 +22,20 @@ enum DataMigrationsPlan: SchemaMigrationPlan {
 		toVersion: SchemaV2.self, 
 		willMigrate: nil,
 		didMigrate: { context in
-			// new sequence for all orphaned actions
-			let sequence = Sequence(
+			// new worklow for all orphaned actions
+			let workflow = Workflow(
 				title: NSLocalizedString("Migrated on \(Date.now.formatted(date: .abbreviated, time: .omitted))", tableName: "Localizable", comment: "")
 			)
 			
 			// add new model instance for orphaned actions
-			let orphanedFetchDescriptor = FetchDescriptor<Action>(predicate: #Predicate { $0.sequence == nil })
+			let orphanedFetchDescriptor = FetchDescriptor<Action>(predicate: #Predicate { $0.workflow == nil })
 			let orphanedActions = try? context.fetch(orphanedFetchDescriptor)
 			for action in orphanedActions ?? [] {
-				action.sequence = sequence
+				action.workflow = workflow
 			}
 			
-			// insert new sequence
-			context.insert(sequence)
+			// insert new workflow
+			context.insert(workflow)
 			
 			try? context.save()
 		}

@@ -1,5 +1,4 @@
 //
-//  SequenceRowView.swift
 //  AutoMotionStudio
 //
 //  Created by Robert Hahn on 05.07.24.
@@ -8,7 +7,7 @@
 import SwiftUI
 import SwiftExtensions
 
-struct SequenceRowView: View {
+struct WorkflowRowView: View {
 	@Binding var title: String
 	let id: UUID
 	var isRenaming: FocusState<UUID?>.Binding?
@@ -23,7 +22,7 @@ struct SequenceRowView: View {
     }
 }
 
-extension SequenceRowView {
+extension WorkflowRowView {
 	enum FocusedField {
 		case title
 	}
@@ -31,7 +30,7 @@ extension SequenceRowView {
 
 #Preview {
 	List {
-		SequenceRowView(
+		WorkflowRowView(
 			title: .constant("Row Item"),
 			id: UUID(),
 			isRenaming: nil

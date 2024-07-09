@@ -10,7 +10,7 @@ import SwiftData
 
 extension Button where Label == Text {
 	/// Button init to directly add a new action into the model context
-	init(insertAction: ActionType, sequence: Sequence, modelContext: ModelContext, selectedActions: Binding<Set<Action>>) {
+	init(insertAction: ActionType, workflow: Workflow, modelContext: ModelContext, selectedActions: Binding<Set<Action>>) {
 		self.init(insertAction.description) {
 			withAnimation {
 				let actions = try? modelContext.fetch(FetchDescriptor<Action>())
@@ -19,7 +19,7 @@ extension Button where Label == Text {
 				let listIndex = if let listIndexMax { listIndexMax + 1 } else { 0 }
 				let action = Action(
 					type: insertAction,
-					sequence: sequence,
+					workflow: workflow,
 					listIndex: listIndex
 				)
 				modelContext.insert(action)

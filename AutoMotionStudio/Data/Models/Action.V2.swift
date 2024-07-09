@@ -24,23 +24,23 @@ extension SchemaV2 {
 		var delay: TimeInterval = 0.5
 		/// List index in the sidebar view
 		var listIndex: Int = 0
-		/// Related sequence for this action
-		var sequence: Sequence?
+		/// Related workflow for this action
+		var workflow: Workflow?
 		
 		// MARK: Init
 		
 		/// Creates and returns a new action
 		/// - Parameters:
 		///   - type: Defines the type of what to do
-		///   - sequence: Related sequence this action belongs to
+		///   - workflow: Related workflow this action belongs to
 		///   - listIndex: List index in the sidebar view
 		init(
 			type: ActionType,
-			sequence: Sequence,
+			workflow: Workflow,
 			listIndex: Int = 0
 		) {
 			self.type = type
-			self.sequence = sequence
+			self.workflow = workflow
 			self.listIndex = listIndex
 		}
 		
@@ -50,20 +50,20 @@ extension SchemaV2 {
 			mouseEasing: MouseEasing,
 			delay: TimeInterval,
 			listIndex: Int,
-			sequence: Sequence?
+			workflow: Workflow?
 		) {
 			self.type = type
 			self.mouseCoordinates = mouseCoordinates
 			self.mouseEasing = mouseEasing
 			self.delay = delay
 			self.listIndex = listIndex
-			self.sequence = sequence
+			self.workflow = workflow
 		}
 		
 		// MARK: Codable requirements
 		
 		enum CodingKeys: CodingKey {
-			case id, type, mouseCoordinates, mouseEasing, delay, listIndex, sequence
+			case id, type, mouseCoordinates, mouseEasing, delay, listIndex, workflow
 		}
 		
 		required init(from decoder: Decoder) throws {
@@ -74,7 +74,7 @@ extension SchemaV2 {
 			mouseEasing = try container.decode(MouseEasing.self, forKey: .mouseEasing)
 			delay = try container.decode(TimeInterval.self, forKey: .delay)
 			listIndex = try container.decode(Int.self, forKey: .listIndex)
-			sequence = try container.decode(Sequence.self, forKey: .sequence)
+			workflow = try container.decode(Workflow.self, forKey: .workflow)
 		}
 		
 		func encode(to encoder: Encoder) throws {
@@ -85,7 +85,7 @@ extension SchemaV2 {
 			try container.encode(mouseEasing, forKey: .mouseEasing)
 			try container.encode(delay, forKey: .delay)
 			try container.encode(listIndex, forKey: .listIndex)
-			try container.encode(sequence, forKey: .sequence)
+			try container.encode(workflow, forKey: .workflow)
 		}
 		
 		// MARK: Hashable

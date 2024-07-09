@@ -18,7 +18,7 @@ enum SchemaV1: VersionedSchema {
 
 enum SchemaV2: VersionedSchema {
 	static var models: [any PersistentModel.Type] {
-		return [Action.self, Sequence.self]
+		return [Action.self, Workflow.self]
 	}
 	
 	static var versionIdentifier: Schema.Version = .init(2, 0, 0)
